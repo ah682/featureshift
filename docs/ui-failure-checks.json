@@ -1,0 +1,45 @@
+{
+  "checked_at": "2026-10-28T07:04:33.922Z",
+  "url": "http://127.0.0.1:18765",
+  "checks": [
+    {
+      "label": "Failed installation is an execution error with no false stochastic claim or acceptance action",
+      "passed": true
+    },
+    {
+      "label": "Environment failure is not counted as a semantic difference",
+      "passed": true
+    },
+    {
+      "label": "Wrong-version evidence produces visible uncertainty and no documented-change claim",
+      "passed": true
+    },
+    {
+      "label": "Missing evidence displays unavailable-source state",
+      "passed": true
+    },
+    {
+      "label": "Timed-out probe has a partial-failure report",
+      "passed": true
+    },
+    {
+      "label": "Failure states introduce no JavaScript exceptions",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "label": "Failure states introduce no console errors",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "widths": [],
+  "screenshots": [
+    "docs/screenshots/ui-environment-error.png",
+    "docs/screenshots/ui-probe-timeout.png"
+  ],
+  "downloads": [],
+  "errors": [],
+  "consoleErrors": [],
+  "passed": true
+}

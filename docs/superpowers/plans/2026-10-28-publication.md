@@ -30,18 +30,18 @@
 **Files:** `featureshift/cli.py`, `featureshift/store.py`, new CLI/store tests.
 **Interfaces:** Existing `main(argv) -> int`, `Store.recover_interrupted() -> int` remain stable.
 
-- [ ] Run existing checks from a fresh copied wheel cache and new environments.
-- [ ] Write a reproducer for environment-provided non-loopback hosts; run it and verify failure before fixing validation.
-- [ ] Write a recovery test with an interrupted run outside the newest 200 runs; verify failure before querying all unfinished runs directly.
-- [ ] Run focused tests and the full suite; commit the fixes only after checks pass.
+- [x] Run existing checks from a fresh copied wheel cache and new environments.
+- [x] Write a reproducer for environment-provided non-loopback hosts; run it and verify failure before fixing validation.
+- [x] Write a recovery test with an interrupted run outside the newest 200 runs; verify failure before querying all unfinished runs directly.
+- [x] Run focused tests and the full suite; commit the fixes only after checks pass.
 
 ### Task 2: Package the source release and document fresh evidence
 
 **Files:** `README.md`, `.gitignore`, `.github/workflows/ci.yml`, `docs/BUILD_STATE.md`, `docs/VERIFICATION.md`, relevant release documentation.
 **Interfaces:** Keep `make demo`, `make check`, `make test`, `make evaluate` and existing CLI behavior reproducible from the checkout.
 
-- [ ] Execute setup, lint/types, full tests, evidence-integrity check, demo seeding and full diagnostic evaluation.
-- [ ] Inspect source distribution inputs and README links; remove references to unavailable development artifacts as evidence of this checkout.
-- [ ] Retain the original prompt locally while excluding it from public release source if it adds process noise rather than user documentation.
-- [ ] Update measured evidence, scope and honest remaining gates. Retain a compact machine-readable evaluation summary if appropriate.
-- [ ] Verify a clean source copy, commit the reviewed release changes, and hand exact results/limits to the coordinator for independent browser/release review.
+- [x] Execute setup, lint/types, full tests, evidence-integrity check, demo seeding and full diagnostic evaluation.
+- [x] Inspect source distribution inputs and README links; remove references to unavailable development artifacts as evidence of this checkout.
+- [x] Retain the original prompt locally while excluding it from public release source if it adds process noise rather than user documentation.
+- [x] Update measured evidence, scope and honest remaining gates. Retain a compact machine-readable evaluation summary if appropriate.
+- [x] Verify a clean source copy, commit the reviewed release changes, and hand exact results/limits to the coordinator for independent browser/release review.

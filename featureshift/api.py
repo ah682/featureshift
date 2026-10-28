@@ -38,7 +38,11 @@ def create_app(state: Path = STATE) -> FastAPI:
     async def local_requests(request: Request, call_next):
         origin = request.headers.get("origin")
         if request.method in ("POST", "PUT", "DELETE") and origin:
-            if urlparse(origin).netloc != request.headers.get("host"):
+            try:
+                origin_host = urlparse(origin).netloc
+            except ValueError:
+                origin_host = None
+            if origin_host != request.headers.get("host"):
                 return JSONResponse({"detail": "Cross-origin changes are disabled for this local service."}, status_code=403)
         if request.method in ("POST", "PUT"):
             if len(await request.body()) > 16_384:

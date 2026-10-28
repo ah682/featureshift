@@ -1,85 +1,59 @@
 # FeatureShift build state
 
-## Scope and implementation plan
+## Release scope
 
-Build a credential-free, CPU-first local preflight for repository-owned stateless
-DataFrame transformations. The first acceptance fixture selects inferred string
-columns with `df.loc[:, df.dtypes == "object"]`: pandas 2.3 should retain the
-feature and pandas 3.0 should drop it. Execute both real environments, attach
-versioned migration evidence, and retain the complete audit trail.
+A credential-free local pandas 2.3.3 → 3.0.0 preflight for reviewed stateless
+DataFrame transformations on CPython 3.12/Linux x86_64. The application executes
+both real environments, compares repeated structured outputs under explicit
+contracts, attaches exact-version offline evidence, and retains reviewable probes,
+reports, regression tests and acceptance audit events. The default provider uses
+deterministic rules and makes zero model calls.
 
-1. Verify/pin Python, pandas and shared dependencies; capture resolved manifests.
-2. Implement the first vertical slice: fixture → two workers → structured diff →
-   persisted report. Use uv for environment setup and bounded trusted workers.
-3. Add version-filtered keyword evidence, reviewable targeted probes, contracts,
-   repeated execution, audit acceptance, downloadable reports and regression tests.
-4. Add the local report UI/API and at least 20 provenance-labeled evaluation cases.
-5. Execute acceptance/evaluation, inspect browser rendering, fix issues, and record
-   measured results plus remaining limitations.
+Arbitrary uploads remain disabled: the trusted subprocess runner is resource
+bounded but can access host files and network. No verified container isolation
+profile, live model adapter or independent customer validation is implemented.
 
-## Decisions
+## Publication preparation — 2026-10-28
 
-- Workspace initially contains only the supplied build prompt; no existing code.
-- Host Python is 3.12.3. No Docker executable is installed. Arbitrary code upload
-  will remain disabled; a subprocess is not a security sandbox.
-- Use a deterministic rule-based probe/retrieval baseline with zero model calls.
-  No credentials, paid services, public deployment, or market-validation claims.
-- Parallel work has explicit boundaries: worker/environment code; evidence corpus
-  and retrieval; static report UI. Main agent integrates core logic/API/evaluation.
+Plan: `docs/superpowers/plans/2026-10-28-publication.md`.
+The original build brief remains available locally; public architecture, data,
+evaluation and limitation documents describe the implemented scope.
 
-## Checks, blockers and next steps
+Completed:
 
-- Read the entire project prompt and checked ancestor/workspace instructions.
-- Opened official pandas documentation and the supplied historical references.
-- Basic Python HTTPS requests cannot resolve pypi.org in the restricted shell;
-  investigate permitted dependency installation and local caches during setup.
-- Next: establish actual pinned environments and execute the selector fixture.
+- Read the full build brief and audited registry, runner, comparator, engine,
+  persistence, CLI, API, artifacts and documented release requirements.
+- Created fresh application and both worker environments with
+  `UV_OFFLINE=1 make setup`, reusing only a copy of the original wheel cache.
+  Original project files and environments remain untouched.
+- Reproduced and fixed an environment-variable bypass of the loopback host
+  restriction; invalid server settings now fail before application startup.
+- Reproduced and fixed malformed port configuration breaking unrelated CLI
+  commands. Server defaults are parsed only for the selected server command.
+- Reproduced and fixed startup recovery omitting interrupted runs older than
+  the 200-run recent-history window. Recovery now scans complete persisted state.
+- Five regression tests failed on the original behavior and passed after fixes.
+- Ruff, mypy and compilation passed. Evidence integrity passed for ten immutable
+  sources and 23 indexed passages. Demo seeding generated numeric (zero changes),
+  intentional (two changes), and selector (two changes) reports successfully.
 
-## First runtime discovery
+Fresh checks passed: 85 automated tests, 62 fast checks, all 28 evaluation
+labels, 140/140 citations and 3/3 normalized reruns. Independent browser review
+passed 22 workflow checks and seven failure checks; desktop/mobile and failure
+screenshots were inspected. Recorded evidence is in `docs/VERIFICATION.md`.
+Independent code review completed; its malformed-Origin regression now passes.
+The final suite passes 85 tests after the certifi/pytest security updates.
+Application and both worker dependency audits report no known vulnerabilities.
+Public GitHub publication is the remaining step.
 
-Both environments installed successfully with Python 3.12.3 and NumPy 2.2.6.
-An actual probe showed `select_dtypes(include=["object"])` still selects strings
-in pandas 3.0.0 with a deprecation warning. The acceptance fixture uses an explicit
-`df.dtypes == "object"` mask, which does lose the string feature. The former is
-retained as a benchmark control; documentation risks are not assumed to be bugs.
+Ruling: retain the accepted architecture and source-checkout workflow rather than
+introduce standalone wheel installation. Runtime assets and reviewed case inputs
+remain repository-relative, and `make demo` is the tested entry point.
 
-## Implemented local release
+## Remaining validation gates
 
-- Real before/after workers, exact hash-pinned shared dependencies, complete
-  manifests and setup-attempt persistence; cold worker recreation from cached
-  wheels verified. The application setup tries cached wheels before downloading.
-- Closed source/fixture registry, typed contracts, structured output comparison,
-  repeated execution, independently validated probes, distinct finding types,
-  review audit, proposed diff validation and standalone regression artifacts.
-- Offline exact-version evidence from 10 immutable official snapshots and 23
-  passages, including explicit source-availability/permission/temporal metadata.
-- Local API and responsive UI; no arbitrary upload profile. Browser checks cover
-  live runs, review, downloads, errors, keyboard interaction and five screen widths.
-- 28 labeled benchmark cases with grouped family folds and four explicit baselines.
-  The first 27-case run matched outcomes but its citation audit found overbroad
-  passage selection; operation-specific matching fixed it, and a full rerun passed.
-- An additional constructed missingness-indicator case demonstrates an actual
-  probe-only difference absent from the supplied fixture and existing tests. Its
-  standalone regression artifact replays the validated probe. It does not establish
-  external product usefulness. The final 28-case evaluation passes all labels,
-  citations and repeat checks.
-
-## Current verification status
-
-The final integrated **79-test suite passed in 50.47 seconds**. Ruff, mypy and
-Python compilation pass. The final benchmark matched **28/28 labels**, **140/140
-citations**, and **3/3 fresh normalized reruns** in 76.49 seconds. The UI passed 37
-browser assertions; desktop/mobile screenshots were inspected. Checks and
-limitations are recorded in `docs/VERIFICATION.md`. `make demo` has been executed
-from clean report state through the optional `npm run dev` launcher.
-The final clean-source offline check also passed: fresh application and both
-workers installed from the wheel cache, all 13 acceptance tests passed, and all
-three demonstration reports were regenerated. The scoped local release gates
-are complete; the local report server is running at `http://127.0.0.1:8765`.
-
-## Remaining external gates
-
-No release-blocking local implementation issue is known. Generalization to real
-maintainer repositories, stronger test suites, human review/customer studies,
-other dependency pairs, a live model experiment and verified container uploads
-remain unperformed. They are not simulated or claimed as complete.
+Historical inputs are present-day adaptations; original historical environments
+were not recreated. Benchmark cases were curated alongside the implementation.
+Human review latency, stronger real repository tests, maintainer/customer value,
+other dependency pairs, live assistant comparisons and secure uploaded-code
+execution remain unperformed. They are not simulated or claimed complete.

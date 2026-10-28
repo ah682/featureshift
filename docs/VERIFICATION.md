@@ -1,89 +1,102 @@
-# Executed release verification
+# Local release verification
 
-Verified locally on **2026-10-13**, Linux x86_64, CPython **3.12.3**, uv **0.11.28**.
-Both target environments use NumPy 2.2.6; only pandas changes (2.3.3 → 3.0.0).
-All measurements below come from actual execution, not simulated integrations.
+Verified on **2026-10-28**, Linux x86_64, CPython **3.12.3**, uv **0.11.28**.
+The before/after workers contain the same five shared dependencies; only pandas
+changes, **2.3.3 → 3.0.0**. PyArrow is absent.
 
-## Consolidated commands and results
+The committed [machine-readable summary](release-verification.json) contains
+measured outcomes, environment package sets and implementation/benchmark hashes.
+Detailed run records are generated locally by the commands below and are ignored
+by source control. A clean checkout does not include a database, wheel cache,
+reports or historical development logs. Initial setup needs package access;
+a previously populated wheel cache permits offline setup.
 
-| Command / workflow | Observed result | Durable evidence |
-| --- | --- | --- |
-| `make setup` | Both exact environments valid; all shared dependencies constant. Cached application install succeeds before any download is attempted. | `.featureshift/setup/environments.json`, `.featureshift/verification/setup.log` |
-| `npm run dev` → `make demo` | Setup, three real seeded reports and loopback server all completed; tested from clean report state. | SQLite audit and `.featureshift/runs/*/report.json`; live `http://127.0.0.1:8765` |
-| `npm test` → `make test` | **79 passed in 50.47 seconds**, one upstream Starlette/httpx deprecation warning. | `.featureshift/verification/test-final.log` |
-| `make check` | Ruff passed; mypy passed for 15 application source files; Python compilation passed. | `.featureshift/verification/check.log` |
-| `.venv/bin/python scripts/refresh_evidence.py --check` | 10 valid immutable source snapshots, 23 valid indexed passages, offline integrity check passed. | `.featureshift/verification/evidence-check.json` |
-| `.venv/bin/python -m featureshift evaluate --state .featureshift/evaluation-state --output .featureshift/evaluation` | **28/28 labels**, **140/140 source/version/operation citations**, **3/3 fresh deterministic reruns**; exit 0. | `.featureshift/evaluation/evaluation.json`, `report.html`, `report.md`; all per-case traces retained |
-| Isolated headless Chrome checks | **37 assertions passed**; no JavaScript/console errors or horizontal overflow at 320, 390, 768, 1024 and 1440px. Desktop/mobile screenshots inspected. | `.featureshift/verification/ui-checks.json`, `ui-failure-checks.json`, `ui-patch-checks.json`, `ui-*.png` |
-| Standalone downloaded regression artifacts | Selector and probe-only boundary artifacts pass under old pandas and fail with the actual changed output under new pandas. No FeatureShift installation needed. | `tests/test_artifacts.py`, full suite log, per-run `regression_test.py` |
-| `FEATURESHIFT_STATE=/tmp/featureshift-reset-verification make reset` | Generated runs, SQLite audit and evaluation directories removed; dependency-directory sentinel retained. | Executed isolated reset check; original working environments and evidence retained |
-| Clean offline source copy: `UV_OFFLINE=1 make setup`, acceptance tests, `make seed` | **All passed**: fresh app + both worker environments created in 1.06s; 13 acceptance tests passed in 106.03s; three real demo reports seeded in 25.39s. | `.featureshift/verification/clean-release.json`, `clean-setup.log`, `clean-acceptance.log`, `clean-seed.log` |
+## Executed checks
 
-A clean application/worker recreation and acceptance run is recorded separately
-in `.featureshift/verification/clean-release.json` and `clean-*.log`. This check
-copies source into a new temporary directory with no existing `.venv`, workers,
-database or reports, and reuses only the pinned wheel cache with `UV_OFFLINE=1`.
-The verified clean source directory is `/tmp/featureshift-clean-release-f2oy7pxe`.
+| Command | Observed result |
+| --- | --- |
+| `UV_OFFLINE=1 make setup` | Fresh application and both worker environments created from a copied pinned wheel cache; manifests valid and shared dependencies constant. |
+| `make check` | Ruff passed; mypy passed for 15 application files; Python compilation passed. |
+| `make test` | **85 passed in 158.25s**, including real old/new execution, exported regression artifacts, API and error handling. One upstream Starlette/httpx deprecation warning. |
+| `make test-fast` | **62 passed, 23 integration tests deselected in 0.62s**. |
+| `.venv/bin/python scripts/refresh_evidence.py --check` | Ten valid immutable snapshots and 23 indexed passages; no hash/offset errors. |
+| `make seed` | Three real reports: numeric zero differences, intentional two differences, selector two differences. |
+| `make evaluate` | **28/28 labels**, **140/140 source/version/operation citations**, **3/3 fresh normalized reruns**; exit 0. JSON, HTML, Markdown and per-case execution artifacts generated. |
+| `node scripts/browser_qa.mjs` against the seeded local service | **22 checks passed**, five viewport widths (320, 390, 768, 1024, 1440px), three actual artifact downloads; no page/console errors or horizontal overflow. Desktop/mobile/execution screenshots inspected. |
+| `node scripts/browser_failure_qa.mjs` | **7 checks passed**: failed installation, wrong-version evidence, timed-out probe and successful subsequent execution. |
 
-The managed development shell denies ordinary socket operations, including the
-cross-thread socketpair used by TestClient. The approved `npm test` launcher runs
-the exact `make test` command successfully. Likewise `npm run dev` runs the exact
-documented `make demo`. These wrappers do not change application/test logic or
-install Node dependencies. Normal Linux users can use Make directly. Initial
-direct HTTPS setup attempts failed DNS in that shell; permitted uv downloads
-and later cached setup completed. Both failed and successful setup attempts are
-persisted and are never treated as semantic results.
+Full tests and evaluation ran concurrently with other local release checks.
+Evaluation took **237.512s**, with **8.1808s** median automated report-ready time;
+these are observations of this run, not performance thresholds or human latency.
 
-CUA exposed no browser and the Playwright extension could not connect. An
-isolated headless Chrome instance successfully exercised the real local service.
-The tested procedure, reusable scripts and temporary profile restrictions are in
-`scripts/browser-qa-notes.md`. No remote CI job or public deployment was run.
+The managed shell requires explicit execution approval for TestClient's local
+socketpair and browser loopback access. The normal commands are unchanged.
+Browser reproduction instructions are in [the QA notes](../scripts/browser-qa-notes.md).
+The release coordinator independently ran both browser workflows and inspected
+desktop/mobile, execution and failure-state screenshots. The committed
+[workflow results](ui-checks.json), [failure checks](ui-failure-checks.json) and
+[screenshots](screenshots/) retain the observations. No remote CI run or
+application deployment is implied by these local checks.
 
-## Required capabilities and acceptance mapping
+## Acceptance coverage
 
-| Capability / mandatory case | Implementation and executed check | Observation / boundary |
-| --- | --- | --- |
-| Parse/persist selected upgrade, manifests, code/input hashes and configuration | `models.py`, `cases.py`, `engine.py`, `store.py`; full suite plus CLI demo | Validated exact pair and registered entry points; immutable run input/source snapshots and hashes retained. Other pairs unavailable. |
-| Versioned permitted evidence, keyword retrieval, source availability, conflicts and temporal cutoff | `evidence.py`, snapshots/manifests, `test_evidence.py` | Hash/offset tampering, wrong versions, contradictory claims and post-cutoff sources are rejected for definitive support. Original release-tag sources explicitly replace unavailable archived HTML. |
-| **String feature disappears from selector** | `examples/selector.py`, `test_acceptance.py`, selector demo | `segment` present before, absent after `df.dtypes == "object"`; exact dtype-check documentation attached; explicit feature contract violated. |
-| **Unaffected transformation has no defect finding** | `examples/numeric.py`, acceptance and API queue tests | Zero observations, zero contract violations, equivalent repeated outputs. No universal safe-upgrade badge. |
-| **Intentional dtype change accepted and traceable** | `examples/intentional_dtype.py`, typed intentional rules, `Store.accept`, API/browser review checks | Two observed dtype differences plus two documented-change annotations accepted; original outputs and audit reasons remain; no unaccepted observation. |
-| **Null/conversion explicit contract** | `compare.py`, `astype-null`, `null-sentinel`, `null-equivalent`; comparator/acceptance tests | Strict null kinds differ; missingness-equivalent contract deliberately normalizes them. A new non-null contract violation is distinguished from a pre-existing one. |
-| **Failed installation is an environment failure** | `runner.verify_install_failure`, `install-failure`, acceptance/browser checks | Real offline `pandas==999999.0.0` installation exits nonzero; installed manifest unchanged; no transformation or semantic-regression claim. |
-| **Stochastic output recognized** | Repeated workers and `_compare_runs`; `stochastic` / seeded control | Within-environment variation produces insufficient evidence; cross-version attribution withheld. Seeded control repeats. |
-| **Wrong-version evidence cannot be definitive** | `wrong-version`, `retrospective-cutoff`, evidence/acceptance tests | Observations can remain visible but no expected-change finding is supported by wrong/later versions. |
-| **Generated probe times out without corrupting jobs** | Worker process-group termination, validation stage; timeout/recovery acceptance and browser checks | Deliberately sleeping generated probe is terminated at its 0.5s deadline, excluded from comparisons; the next numeric run succeeds. |
-| **Arbitrary-upload mode unavailable without isolation** | Closed registry, forbidden extra request fields, `/api/uploads`, `upload_policy`; API/browser tests | Endpoint returns 403 and UI disables upload. No verified container profile; trusted subprocess is explicitly not a secure sandbox. |
-| **Repeated deterministic reports normalize equivalently** | `normalized_findings`, acceptance tests, evaluator's three fresh reruns | All 3/3 selected full reruns match, excluding IDs, timestamps, paths and timing. |
-| Reviewable targeted code, independent validation, and coverage beyond original fixture | `probes.py`, `probe-only-null`, artifact integration test | Baseline `[0,0,0]` remains unchanged and both existing tests pass. Validated null-boundary probe changes indicator to `[1,0,0]`; exported regression replays that probe. Constructed during development. |
-| Compare values, categories, ordering and tolerances | `compare.py`, 25 comparator tests | Numeric tolerances, large integer exactness, null kinds, column order, category mappings, index names and whole-row/index association tested. Unordered tolerant comparison capped at 500 rows. |
-| Findings include source, evidence, code, outputs, rule, command and downstream review impact | `engine.py`, `artifacts.py`, static report UI; API/browser exports | JSON/HTML contain full audit and execution records. Suggested selector patch is not applied, and its remaining dtype differences are visible with validation records. |
-| Local persistence and failure states | SQLite migration 1, bounded queue, startup recovery; API tests | Consequential events persisted; interrupted jobs marked failed. Typed invalid input, unknown IDs, unavailable uploads, loading, partial and empty states handled. |
-| Baselines and reproducible evaluation | `evaluation.py`, `test_evaluation.py`, actual 28-case run | Existing tests, explicit edgetest-style replay, documentation-only risks and full system compared; no fabricated assistant/model results. |
+| Capability | Implementation and executable coverage |
+| --- | --- |
+| Exact upgrade, manifests, configuration and code/input hashes | `models.py`, `cases.py`, `engine.py`, `runner.py`, `store.py`; runner, acceptance and artifact tests. |
+| Versioned evidence, availability, conflicts and temporal cutoff | `evidence.py`, licensed snapshots/manifests; `tests/test_evidence.py` rejects tampering, wrong versions, contradictions and later evidence. |
+| String feature disappears with matching documentation | `examples/selector.py`, `tests/test_acceptance.py`; `df.dtypes == "object"` loses `segment`, violating the column contract. `select_dtypes` compatibility remains a separate control. |
+| Equivalent transformation has no defect finding | Numeric acceptance/API tests and benchmark controls; zero observations/contract violations. |
+| Intended dtype adoption remains auditable | Typed intentional contract, `Store.accept`, API and browser review; original observations, reasons and audit events retained. |
+| Null/conversion comparison follows explicit contract | Comparator and acceptance tests; strict sentinel kinds versus deliberate missingness equivalence, plus new versus pre-existing contract violations. |
+| Installation failure is an environment error | A real offline impossible-pin install fails without altering installed packages; acceptance, runner and browser failure checks. |
+| Stochastic output withholds cross-version attribution | Repeated baseline/probe execution and seeded control; determinism tests and benchmark. |
+| Wrong-version evidence cannot establish cause | Wrong-version and retrospective controls; exact-version support checks. |
+| Probe timeout terminates without harming later jobs | Process-group termination, independently validated probes, timeout/recovery acceptance and runner tests. |
+| Uploads remain unavailable | Closed registry, rejected extra input fields, explicit upload policy/403 response; API and browser checks. Trusted subprocesses are not secure sandboxes. |
+| Deterministic reruns normalize equivalently | Acceptance tests and three full fresh evaluator reruns, retaining behavior/evidence while excluding IDs/timing. |
+| Probe-only boundary and standalone exported regression | `probe-only-null` plus artifact tests; ordinary fixture unchanged, probe indicator changes 0→1, exported test passes before and fails after without FeatureShift installation. |
+| Values, ordering, categories, tolerances and index association | Comparator tests cover large integers, null kinds, reordered columns, whole-record multiset matching and duplicate-label rejection. Unordered tolerant comparison caps at 500 rows. |
+| Reviewable evidence, source, before/after output and patches | JSON/HTML downloads and artifact tests; suggested selector diff is validated, never applied, and remaining dtype differences remain visible. |
+| Durable states, bounded queue and startup recovery | SQLite audit, API tests and `tests/test_store.py`; unfinished runs recover even outside the UI's newest 200 records. |
+| Loopback server configuration | `tests/test_cli.py`; non-loopback environment defaults fail before startup, and malformed port settings do not break unrelated commands. |
+| Baselines and diagnostic evaluation | `evaluation.py`, `tests/test_evaluation.py` and full replay; edgetest-style baseline explicitly reuses actual existing-test results. The edgetest package is not executed. |
 
-## Measured outcomes and their limits
-
-The final 28-case diagnostic run took **76.49 seconds**, with **2.61 seconds** median
-automated report-ready time. Human review latency was not measured.
+## Measured diagnostic outcomes
 
 | Measure | Result |
 | --- | --- |
 | Full-system material-change recall | 12/12 |
-| Existing tests / shared edgetest-style replay | 1/12 |
+| Existing tests / shared dependency-test replay | 1/12 |
 | Documentation-only risk recall | 12/12; also warned on 8/10 equivalent cases |
 | Full-system alerts on equivalent cases | 0/10 |
-| False defect allegations on equivalent or intentional cases | 0/11 |
-| Probe execution success | 24/25 including the required timeout; 24/24 excluding it |
-| Completed deterministic probe comparisons | 23/25; timeout and stochastic controls excluded |
+| False defect allegations on equivalent/intentional cases | 0/11 |
+| Probe execution success | 24/25 including required timeout; 24/24 excluding it |
+| Completed deterministic probe comparisons | 23/25; timeout/stochastic controls excluded |
 | Within-environment repeated contexts | 98/102 equivalent; four stochastic contexts differ |
-| Exact source and operation citations | 140/140 |
+| Exact source/version/operation citations | 140/140 |
 | Fresh normalized reruns | 3/3 |
-| Actual model calls / cost | 0 / $0 |
-| Cases detected only by generated probes | 1 deliberately constructed missingness-indicator case |
+| Model calls / cost | 0 / $0 |
+| Material cases detected only by probes | One deliberately constructed missingness-indicator case |
 
-The suite is curated alongside the implementation. It does not establish general
-accuracy, superiority to a capable coding assistant, commercial demand or
-production readiness. Historical inputs are present-day adaptations of licensed
-regression tests. Independent repositories, stronger test baselines, original-time
-historical evidence, human review/customer studies, other environments and secure
-uploaded-code execution remain unperformed gates; see `docs/LIMITATIONS.md`.
+The suite was curated alongside the implementation. It does not establish general
+accuracy, customer usefulness, superiority to a coding assistant or production
+readiness. Historical inputs are present-day adaptations of licensed regressions;
+original issue environments were not recreated. Human review latency and customer
+studies were not measured. See [evaluation](EVALUATION.md) and
+[limitations](LIMITATIONS.md) for the remaining validation gates.
+
+## Final review and dependency audit
+
+Independent review found no major blocker. Its malformed-Origin regression
+reproduced HTTP 500 before the fix and HTTP 403 afterward, with no run created.
+The final 85-test run above includes that regression and uses the patched
+application dependencies. Earlier evaluation and browser observations remain
+valid for the unchanged comparison engine, worker pair and UI.
+
+The application lock now pins certifi 2026.10.19 and pytest 9.0.3, resolving
+[the certifi advisory](https://github.com/advisories/GHSA-6q48-6c7w-9gw2) and
+[the pytest advisory](https://github.com/advisories/GHSA-6w46-j5rx-g56g).
+`uvx pip-audit --path .venv/lib/python3.12/site-packages` reported no known
+vulnerabilities. Separate audits of each pandas worker environment also passed.
+The [application audit](dependency-audit-2026-10-28.json) is a dated check against
+known advisories, not a guarantee against undiscovered issues.

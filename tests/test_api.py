@@ -41,6 +41,15 @@ def test_cross_origin_mutations_uploads_and_oversized_controls_are_disabled(tmp_
         assert client.get("/", headers={"Host": "external.example"}).status_code == 400
 
 
+def test_malformed_origin_is_rejected_without_creating_a_run(tmp_path: Path) -> None:
+    with TestClient(create_app(tmp_path), raise_server_exceptions=False) as client:
+        response = client.post(
+            "/api/runs", json={"case_id": "numeric"}, headers={"Origin": "http://["}
+        )
+        assert response.status_code == 403
+        assert client.get("/api/runs").json() == []
+
+
 @pytest.mark.integration
 @pytest.mark.skipif(not all((ENV_ROOT / side / "bin" / "python").exists() for side in ("before", "after")), reason="Run make setup for real queued workers")
 def test_queued_numeric_run_completes_with_json_html_and_regression_downloads(tmp_path: Path) -> None:

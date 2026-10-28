@@ -10,12 +10,18 @@ This is a local engineering demonstration, not a universal safe-upgrade check or
 a commercially validated product. The default provider is deterministic rules:
 **no model calls, credentials, cloud services or GPU**.
 
+![FeatureShift showing a pandas upgrade that drops a selected feature](docs/screenshots/ui-desktop.png)
+
 ## Run the local demo
 
-Verified platform: Linux x86_64, Python 3.12.3, uv 0.11.28. Install that uv version
-with `python3 -m pip install uv==0.11.28` if needed. Then, from this directory:
+The supported checkout workflow requires Linux x86_64 and Python 3.12; the
+verified versions are Python 3.12.3 and uv 0.11.28. Install uv using its
+[installation guide](https://docs.astral.sh/uv/getting-started/installation/)
+(or `pipx install uv==0.11.28` if you already use pipx). Then:
 
 ```sh
+git clone https://github.com/ah682/featureshift.git
+cd featureshift
 make demo
 ```
 
@@ -29,8 +35,11 @@ Variables in `.env.example` are optional process environment variables; `.env`
 files are not loaded automatically. A requested provider other than
 `deterministic-rules` is explicitly rejected.
 
+Run `make setup` to install without starting the UI. This release runs from the
+source checkout; it is not distributed as a standalone Python wheel.
+
 The main example selects features with `df.dtypes == "object"`. Its `segment`
-feature appears before the upgrade and disappears afterward. Importantly,
+feature appears before the upgrade and disappears afterward. In contrast,
 `select_dtypes(include=["object"])` still retains strings in this **exact** pandas
 3.0.0 environment; the suite includes that behavior as a control.
 
@@ -103,3 +112,6 @@ and evaluation state while retaining environments, wheel cache and evidence. Run
 Read [the walkthrough](docs/DEMO.md), [architecture](docs/ARCHITECTURE.md),
 [data provenance](docs/DATA.md), [evaluation](docs/EVALUATION.md),
 [verification](docs/VERIFICATION.md) and [limitations](docs/LIMITATIONS.md).
+
+Project code is [MIT licensed](LICENSE). Cached pandas sources and adapted
+regression inputs retain the [upstream notices](evidence/licenses/).

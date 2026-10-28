@@ -55,7 +55,11 @@ Each case report retains synthetic/historical status, license, original issue ti
 
 `evaluation.json` is the authoritative measured result for the most recent run. `acceptance_passed` requires matching labels, valid operation-specific citations, and the selected across-run repeat checks. The report keeps every mismatch instead of relabeling cases. The independent citation check exposed broad evidence selection during development; the implementation was corrected and the entire evaluation rerun.
 
-The verified 2026-10-13 CLI run completed in **76.49 seconds**, with a median case report-ready time of **2.61 seconds**:
+The verified 2026-10-28 CLI run completed in **237.512 seconds**, with a median
+automated report-ready time of **8.1808 seconds**. Other local release checks
+ran concurrently; these timings are observed, not performance thresholds. The
+[path-free measured summary](release-verification.json) is committed; rerun
+`make evaluate` for full local traces:
 
 | Measure | Actual result |
 | --- | --- |

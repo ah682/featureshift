@@ -22,7 +22,8 @@
   there is no fabricated coding-assistant comparison.
 - Human review latency, maintenance burden, customer value and commercial demand
   have not been measured. Report preparation time is measured separately. No
-  market-validation claim is made, and nothing has been published or deployed.
+  market-validation claim is made. Publishing the source does not establish
+  those outcomes or deploy the application.
 - Only DataFrame outputs with supported scalar encodings are accepted. Inputs
   are small JSON fixtures. Duplicate feature labels are rejected; unordered
   tolerant comparison is limited to 500 rows. Datetime values/categories are

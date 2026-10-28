@@ -7,3 +7,6 @@ __pycache__/
 .mypy_cache/
 .env
 
+
+# Original local implementation brief; public scope is documented in docs/.
+01_ML_Upgrade_Preflight_Prompt.txt

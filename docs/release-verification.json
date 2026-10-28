@@ -1,0 +1,378 @@
+{
+  "schema_version": 1,
+  "verified_at": "2026-10-28T07:03:16.815986+00:00",
+  "platform": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "python": "3.12.3",
+    "uv": "0.11.28"
+  },
+  "checks": {
+    "setup": {
+      "command": "UV_OFFLINE=1 make setup",
+      "status": "passed",
+      "cache_only": true,
+      "fresh_application_and_workers": true,
+      "patched_lock_setup": "make setup succeeded after certifi/pytest patch updates"
+    },
+    "static": {
+      "command": "make check",
+      "status": "passed",
+      "mypy_source_files": 15
+    },
+    "tests": {
+      "command": "make test",
+      "passed": 85,
+      "failed": 0,
+      "duration_s": 158.25,
+      "warnings": 1,
+      "warning": "Upstream Starlette httpx TestClient deprecation"
+    },
+    "fast_tests": {
+      "command": "make test-fast",
+      "passed": 62,
+      "deselected": 23,
+      "duration_s": 0.62
+    },
+    "evidence": {
+      "command": ".venv/bin/python scripts/refresh_evidence.py --check",
+      "valid_sources": 10,
+      "valid_passages": 23
+    },
+    "demo": {
+      "command": "make seed",
+      "status": "passed",
+      "observed_differences": {
+        "numeric": 0,
+        "intentional": 2,
+        "selector": 2
+      }
+    }
+  },
+  "evaluation": {
+    "duration_s": 237.512,
+    "summary": {
+      "cases": 28,
+      "outcome_agreement": {
+        "numerator": 28,
+        "denominator": 28,
+        "rate": 1.0
+      },
+      "material_change_recall": {
+        "numerator": 12,
+        "denominator": 12,
+        "rate": 1.0
+      },
+      "false_defect_allegations": {
+        "numerator": 0,
+        "denominator": 11,
+        "rate": 0.0
+      },
+      "source_operation_correctness": {
+        "numerator": 140,
+        "denominator": 140,
+        "rate": 1.0
+      },
+      "model_calls": 0,
+      "model_cost_usd": 0.0,
+      "failures": [],
+      "acceptance_passed": true
+    },
+    "metrics": {
+      "case_count": 28,
+      "label_counts": {
+        "material_change": 12,
+        "equivalent": 10,
+        "insufficient_evidence": 3,
+        "environment_error": 1,
+        "probe_error": 1,
+        "intentional_change": 1
+      },
+      "outcome_counts": {
+        "material_change": 12,
+        "equivalent": 10,
+        "insufficient_evidence": 3,
+        "environment_error": 1,
+        "probe_error": 1,
+        "intentional_change": 1
+      },
+      "outcome_agreement": {
+        "numerator": 28,
+        "denominator": 28,
+        "rate": 1.0
+      },
+      "baselines": {
+        "existing_tests": {
+          "material_change_alert_recall": {
+            "numerator": 1,
+            "denominator": 12,
+            "rate": 0.083333
+          },
+          "material_change_observation_recall": null,
+          "nonmaterial_case_alert_rate": {
+            "numerator": 0,
+            "denominator": 11,
+            "rate": 0.0
+          },
+          "equivalent_case_alert_rate": {
+            "numerator": 0,
+            "denominator": 10,
+            "rate": 0.0
+          },
+          "intentional_change_visibility": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "false_defect_allegations": {
+            "numerator": 0,
+            "denominator": 11,
+            "rate": 0.0
+          },
+          "alert_semantics": "existing test newly fails after upgrade"
+        },
+        "edgetest_style": {
+          "material_change_alert_recall": {
+            "numerator": 1,
+            "denominator": 12,
+            "rate": 0.083333
+          },
+          "material_change_observation_recall": null,
+          "nonmaterial_case_alert_rate": {
+            "numerator": 0,
+            "denominator": 11,
+            "rate": 0.0
+          },
+          "equivalent_case_alert_rate": {
+            "numerator": 0,
+            "denominator": 10,
+            "rate": 0.0
+          },
+          "intentional_change_visibility": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "false_defect_allegations": {
+            "numerator": 0,
+            "denominator": 11,
+            "rate": 0.0
+          },
+          "alert_semantics": "existing test newly fails after upgrade"
+        },
+        "documentation_only": {
+          "material_change_alert_recall": {
+            "numerator": 12,
+            "denominator": 12,
+            "rate": 1.0
+          },
+          "material_change_observation_recall": null,
+          "nonmaterial_case_alert_rate": {
+            "numerator": 9,
+            "denominator": 11,
+            "rate": 0.818182
+          },
+          "equivalent_case_alert_rate": {
+            "numerator": 8,
+            "denominator": 10,
+            "rate": 0.8
+          },
+          "intentional_change_visibility": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "false_defect_allegations": {
+            "numerator": 0,
+            "denominator": 11,
+            "rate": 0.0
+          },
+          "alert_semantics": "documented operation risk; no runtime observation"
+        },
+        "full_system": {
+          "material_change_alert_recall": {
+            "numerator": 12,
+            "denominator": 12,
+            "rate": 1.0
+          },
+          "material_change_observation_recall": {
+            "numerator": 12,
+            "denominator": 12,
+            "rate": 1.0
+          },
+          "nonmaterial_case_alert_rate": {
+            "numerator": 1,
+            "denominator": 11,
+            "rate": 0.090909
+          },
+          "equivalent_case_alert_rate": {
+            "numerator": 0,
+            "denominator": 10,
+            "rate": 0.0
+          },
+          "intentional_change_visibility": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "false_defect_allegations": {
+            "numerator": 0,
+            "denominator": 11,
+            "rate": 0.0
+          },
+          "alert_semantics": "executed output difference"
+        }
+      },
+      "probe_execution_success_all": {
+        "numerator": 24,
+        "denominator": 25,
+        "rate": 0.96
+      },
+      "probe_execution_success_excluding_declared_failure_controls": {
+        "numerator": 24,
+        "denominator": 24,
+        "rate": 1.0
+      },
+      "probe_deterministic_comparison_completion": {
+        "numerator": 23,
+        "denominator": 25,
+        "rate": 0.92
+      },
+      "additional_material_alerts_over_existing_tests": 11,
+      "material_cases_detected_only_by_generated_probes": [
+        "probe-only-null"
+      ],
+      "exact_source_version_validity": {
+        "numerator": 140,
+        "denominator": 140,
+        "rate": 1.0
+      },
+      "correct_source_group_and_operation": {
+        "numerator": 140,
+        "denominator": 140,
+        "rate": 1.0
+      },
+      "expected_findings_without_verified_support": 0,
+      "within_environment_repeatability": {
+        "numerator": 98,
+        "denominator": 102,
+        "rate": 0.960784
+      },
+      "case_report_ready_duration_s": {
+        "median": 8.1808,
+        "total": 216.0865
+      },
+      "human_review_latency_s": null,
+      "human_review_sessions": 0,
+      "model_calls": 0,
+      "model_cost_usd": 0.0
+    },
+    "benchmark_manifest_sha256": "9f4f6996f3ac9e4f384d7f2990165037afec448ec0330815e766f9e98e93b09e",
+    "implementation_sha256_at_start": {
+      "engine.py": "e6cbaf1b889b3cb08c421f099c8fa691dd5a5b2287d0b1bcb18c77bd576692c8",
+      "probes.py": "6d60c98f49f0cebcbd0ca018c5f6ec00d594768aabde80b8e1e9acca4c6c5d9b",
+      "compare.py": "dfe4201e5d325a0f23109449b9afeffaf2c6e41a7dbdb6ec9417b7923f5598c5",
+      "runner.py": "386086826b80a4a9464a80e9e4d39eaae7c2242412a83c97e07a4b2201dc8a2b",
+      "evidence.py": "a1aa3e467af3e5a7cf522019d28710f148feca61d578ef0116986e437c290ab7",
+      "evaluation.py": "3dd7770bb72346652201b9ec756ed72a459cf2aafbbbd3883fb9e9dbc74cd293"
+    },
+    "methodology": {
+      "repetitions_per_environment": 2,
+      "baseline_execution_reuse": "existing_tests and edgetest_style share identical actual execution records",
+      "actual_edgetest_package_executed": false,
+      "coding_assistant_comparison": {
+        "performed": false,
+        "results": null
+      },
+      "docs_only_predictions_frozen_before_execution": true,
+      "material_change_denominator": "Cases labeled material_change; intentional changes and insufficient-evidence controls are reported separately.",
+      "false_defect_definition": "Unaccepted declared-contract violation asserted on an equivalent or intentional-change case. A risk or test-failure alert is not itself a defect allegation.",
+      "fold_policy": "Group by pandas change family; demo-overlapping string-selector, string-inference and numeric groups are development. All other families are evaluation; no family spans folds.",
+      "heldout_independent": false,
+      "suite_scope": "All benchmark cases are diagnostic replays authored alongside implementation, separately registered from demonstration examples.",
+      "history": "Adapted BSD-licensed regressions replayed on the selected present-day pair; original issue environments are not recreated. Temporal cutoffs withhold later evidence.",
+      "human_review_latency_measured": false,
+      "commercial_validation": false
+    }
+  },
+  "repeatability": {
+    "numerator": 3,
+    "denominator": 3,
+    "rate": 1.0
+  },
+  "environments": {
+    "before": {
+      "python": "3.12.3",
+      "packages": {
+        "numpy": "2.2.6",
+        "pandas": "2.3.3",
+        "python-dateutil": "2.9.0.post0",
+        "pytz": "2025.2",
+        "six": "1.17.0",
+        "tzdata": "2025.2"
+      },
+      "platform": "Linux-6.17.0-35-generic-x86_64-with-glibc2.39",
+      "machine": "x86_64"
+    },
+    "after": {
+      "python": "3.12.3",
+      "packages": {
+        "numpy": "2.2.6",
+        "pandas": "3.0.0",
+        "python-dateutil": "2.9.0.post0",
+        "pytz": "2025.2",
+        "six": "1.17.0",
+        "tzdata": "2025.2"
+      },
+      "platform": "Linux-6.17.0-35-generic-x86_64-with-glibc2.39",
+      "machine": "x86_64"
+    }
+  },
+  "limitations": [
+    "Curated with the implementation; not an independent heldout estimate.",
+    "Historical inputs replayed on this pair; original issue environments not recreated.",
+    "Human review latency and coding-assistant comparison not measured.",
+    "No live model calls, customer validation, or uploaded-code isolation.",
+    "Runtime checks ran concurrently with other local release work; durations are observations, not performance thresholds.",
+    "Remote CI has not run as part of this local verification."
+  ],
+  "browser_verification": {
+    "workflow_checks": 22,
+    "failure_checks": 7,
+    "passed": true,
+    "viewport_widths": [
+      320,
+      390,
+      768,
+      1024,
+      1440
+    ],
+    "real_downloads": 3,
+    "reports": [
+      "docs/ui-checks.json",
+      "docs/ui-failure-checks.json"
+    ],
+    "visual_inspection": [
+      "desktop",
+      "mobile",
+      "execution",
+      "installation_failure",
+      "probe_timeout"
+    ]
+  },
+  "review_fix": {
+    "test": "test_malformed_origin_is_rejected_without_creating_a_run",
+    "red": "HTTP 500",
+    "green": "HTTP 403; no run created"
+  },
+  "patched_dependencies": {
+    "certifi": "2026.10.19",
+    "pytest": "9.0.3"
+  },
+  "dependency_audit": {
+    "tool": "pip-audit 2.10.1",
+    "application_known_vulnerabilities": 0,
+    "pandas_2_worker_known_vulnerabilities": 0,
+    "pandas_3_worker_known_vulnerabilities": 0
+  }
+}

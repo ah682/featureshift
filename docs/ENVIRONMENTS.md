@@ -142,32 +142,16 @@ assertions return an error. An absent optional test is explicitly identified as
 
 ## Executed checks
 
-On 2026-10-13:
+Publication verification on 2026-10-28 created fresh application and worker
+environments using `UV_OFFLINE=1 make setup` with only a copied wheel cache.
+Both workers matched the complete package sets above. The full test suite and
+28-case diagnostic replay passed, including impossible-pin installation,
+timeout/recovery, omitted ambient secrets, structured serialization and exported
+standalone regression tests. See [verification](VERIFICATION.md) and the
+[measured summary](release-verification.json) for commands and outcomes.
 
-- Installed both complete environments with hash verification using uv 0.11.28;
-  each contains exactly the six listed packages.
-- `python3 scripts/setup_environments.py` returned `ok` and
-  `shared_dependencies_constant: true`.
-- `python3 scripts/setup_environments.py --verify-install-failure` exercised the
-  impossible pin: actual uv exit 1, `environment_error`, unchanged environment.
-- A clean pair was created at
-  `/tmp/featureshift-clean-worker-offline-ygr8vcz7` with the warmed cache and
-  `setup_environments(root, offline=True)`. All four creation/install commands
-  returned exit 0; six packages installed per environment.
-- A separate empty-cache setup in the restricted host failed DNS fetching from
-  PyPI and persisted both environment failures. This is a real setup failure,
-  not a simulated semantic result. Direct approved uv installation fetched the
-  wheels successfully; cached offline recreation then passed.
-- `.venv/bin/python -m pytest tests/test_runner.py -q`: 7 passed in 3.58 seconds
-  on the initial integration run, including a terminated timeout followed by a
-  healthy job, ambient-secret omission, null/category serialization, actual
-  package versions, baseline assertions, and missing-environment handling.
-- Ruff passed for the worker, runner, setup script, and runner tests; mypy
-  passed for the runner.
-
-A useful empirical correction: pandas 3.0.0's `select_dtypes(include=['object'])`
-retains string columns for compatibility. The disappearing-feature acceptance
-fixture therefore uses the actual legacy equality selector
-`df.loc[:, df.dtypes == 'object']`, which retains the string feature in 2.3.3
-and drops it in 3.0.0. Worker testing caught this distinction before it became a
-false demonstration claim.
+An empirical correction retained in the tests: pandas 3.0.0's
+`select_dtypes(include=['object'])` retains strings for compatibility. The
+feature-loss acceptance fixture instead uses `df.dtypes == 'object'`, which
+retains the string feature in 2.3.3 and drops it in 3.0.0. Documentation risks are
+checked against execution before they become findings.
