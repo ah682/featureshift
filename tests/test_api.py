@@ -50,6 +50,25 @@ def test_malformed_origin_is_rejected_without_creating_a_run(tmp_path: Path) -> 
         assert client.get("/api/runs").json() == []
 
 
+def test_failed_creation_releases_queue_capacity(tmp_path: Path, monkeypatch) -> None:
+    app = create_app(tmp_path)
+    engine = app.state.engine
+    create = engine.create
+
+    def disk_full(request):
+        raise OSError("No space left on device")
+
+    with TestClient(app, raise_server_exceptions=False) as client:
+        monkeypatch.setattr(engine, "create", disk_full)
+        for _ in range(8):
+            assert client.post("/api/runs", json={"case_id": "numeric"}).status_code == 500
+        monkeypatch.setattr(engine, "create", create)
+        monkeypatch.setattr(engine, "execute", lambda run_id: None)
+        response = client.post("/api/runs", json={"case_id": "numeric"})
+        assert response.status_code == 202
+        assert client.get(f"/api/runs/{response.json()['id']}").status_code == 200
+
+
 @pytest.mark.integration
 @pytest.mark.skipif(not all((ENV_ROOT / side / "bin" / "python").exists() for side in ("before", "after")), reason="Run make setup for real queued workers")
 def test_queued_numeric_run_completes_with_json_html_and_regression_downloads(tmp_path: Path) -> None:

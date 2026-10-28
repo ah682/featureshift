@@ -107,7 +107,9 @@ def compare_frames(before: dict, after: dict, contract: Contract) -> list[dict]:
         b = [row[position] for row in new_rows]
         if not equal_value(a, b, contract):
             name = old_names[old_keys.index(key)]
-            null_change = any(isinstance(v, dict) and "$null" in v for v in a + b)
+            changed_values = [v for x, y in zip(a, b) if not equal_value(x, y, contract) for v in (x, y)]
+            changed_values.extend(a[len(b):] + b[len(a):])
+            null_change = any(isinstance(v, dict) and "$null" in v for v in changed_values)
             prefix = "nulls" if null_change else "values"
             add(f"{prefix}:{name}", a, b, f"Values in {name!r} differ under the declared comparison rule.")
     return changes

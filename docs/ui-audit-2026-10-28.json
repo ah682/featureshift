@@ -1,0 +1,263 @@
+{
+  "checked_at": "2026-10-28T09:21:37.652Z",
+  "url": "http://127.0.0.1:18765",
+  "checks": [
+    {
+      "label": "Arbitrary upload is visibly disabled",
+      "passed": true
+    },
+    {
+      "label": "Seeded report shows actual executed differences and contract violations",
+      "passed": true,
+      "detail": {
+        "title": "Object dtype selector",
+        "metrics": [
+          "2",
+          "2",
+          "2",
+          "0"
+        ],
+        "findings": 6
+      }
+    },
+    {
+      "label": "No horizontal page overflow at 1440px",
+      "passed": true,
+      "detail": {
+        "width": 1440,
+        "documentWidth": 1425,
+        "bodyWidth": 1425,
+        "viewportContentWidth": 1425,
+        "overflow": false,
+        "heading": "Upgrade with evidence.",
+        "report": "Object dtype selector"
+      }
+    },
+    {
+      "label": "Execution tab displays structured DataFrame output",
+      "passed": true
+    },
+    {
+      "label": "Source tab includes contract, probes and reviewable patch",
+      "passed": true
+    },
+    {
+      "label": "Evidence tab retains source provenance and passage offsets",
+      "passed": true
+    },
+    {
+      "label": "Keyboard arrow navigation switches report tabs and focus",
+      "passed": true
+    },
+    {
+      "label": "No horizontal page overflow at 1024px",
+      "passed": true,
+      "detail": {
+        "width": 1024,
+        "documentWidth": 1009,
+        "bodyWidth": 1009,
+        "viewportContentWidth": 1009,
+        "overflow": false,
+        "heading": "Upgrade with evidence.",
+        "report": "Object dtype selector"
+      }
+    },
+    {
+      "label": "No horizontal page overflow at 768px",
+      "passed": true,
+      "detail": {
+        "width": 768,
+        "documentWidth": 753,
+        "bodyWidth": 753,
+        "viewportContentWidth": 753,
+        "overflow": false,
+        "heading": "Upgrade with evidence.",
+        "report": "Object dtype selector"
+      }
+    },
+    {
+      "label": "No horizontal page overflow at 390px",
+      "passed": true,
+      "detail": {
+        "width": 390,
+        "documentWidth": 375,
+        "bodyWidth": 375,
+        "viewportContentWidth": 375,
+        "overflow": false,
+        "heading": "Upgrade with evidence.",
+        "report": "Object dtype selector"
+      }
+    },
+    {
+      "label": "No horizontal page overflow at 320px",
+      "passed": true,
+      "detail": {
+        "width": 320,
+        "documentWidth": 305,
+        "bodyWidth": 305,
+        "viewportContentWidth": 305,
+        "overflow": false,
+        "heading": "Upgrade with evidence.",
+        "report": "Object dtype selector"
+      }
+    },
+    {
+      "label": "Running state prevents duplicate execution",
+      "passed": true
+    },
+    {
+      "label": "New unaffected run reports equivalent normalized output and no findings",
+      "passed": true
+    },
+    {
+      "label": "Intentional change preserves accepted findings and audit text",
+      "passed": true
+    },
+    {
+      "label": "Local review acceptance persists its reason and retains before/after evidence",
+      "passed": true
+    },
+    {
+      "label": "Acceptance is persisted as an audit event",
+      "passed": true,
+      "detail": {
+        "accepted": 1,
+        "events": 1
+      }
+    },
+    {
+      "label": "Download endpoint report.json returns an artifact",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "type": "application/json",
+        "bytes": 162667
+      }
+    },
+    {
+      "label": "Download endpoint report.html returns an artifact",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "type": "text/html; charset=utf-8",
+        "bytes": 161645
+      }
+    },
+    {
+      "label": "Download endpoint regression_test.py returns an artifact",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "type": "text/x-python; charset=utf-8",
+        "bytes": 13252
+      }
+    },
+    {
+      "label": "Export controls trigger all three file downloads",
+      "passed": true,
+      "detail": [
+        "featureshift-12dda7bf4c834446.html",
+        "featureshift-12dda7bf4c834446.json",
+        "test_featureshift_12dda7bf4c834446.py"
+      ]
+    },
+    {
+      "label": "Delayed acceptance and completion preserve the selected report",
+      "passed": true,
+      "detail": {
+        "acceptanceKeptSelection": true,
+        "completionKeptSelection": true
+      }
+    },
+    {
+      "label": "No page JavaScript exceptions",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "label": "No browser console errors",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "widths": [
+    {
+      "width": 1440,
+      "documentWidth": 1425,
+      "bodyWidth": 1425,
+      "viewportContentWidth": 1425,
+      "overflow": false,
+      "heading": "Upgrade with evidence.",
+      "report": "Object dtype selector"
+    },
+    {
+      "width": 1024,
+      "documentWidth": 1009,
+      "bodyWidth": 1009,
+      "viewportContentWidth": 1009,
+      "overflow": false,
+      "heading": "Upgrade with evidence.",
+      "report": "Object dtype selector"
+    },
+    {
+      "width": 768,
+      "documentWidth": 753,
+      "bodyWidth": 753,
+      "viewportContentWidth": 753,
+      "overflow": false,
+      "heading": "Upgrade with evidence.",
+      "report": "Object dtype selector"
+    },
+    {
+      "width": 390,
+      "documentWidth": 375,
+      "bodyWidth": 375,
+      "viewportContentWidth": 375,
+      "overflow": false,
+      "heading": "Upgrade with evidence.",
+      "report": "Object dtype selector"
+    },
+    {
+      "width": 320,
+      "documentWidth": 305,
+      "bodyWidth": 305,
+      "viewportContentWidth": 305,
+      "overflow": false,
+      "heading": "Upgrade with evidence.",
+      "report": "Object dtype selector"
+    }
+  ],
+  "screenshots": [
+    ".featureshift/verification/ui-desktop.png",
+    ".featureshift/verification/ui-execution.png",
+    ".featureshift/verification/ui-mobile.png",
+    ".featureshift/verification/ui-mobile-full.png",
+    ".featureshift/verification/ui-equivalent.png",
+    ".featureshift/verification/ui-intentional.png",
+    ".featureshift/verification/ui-desktop-final.png"
+  ],
+  "downloads": [
+    {
+      "suffix": "report.json",
+      "status": 200,
+      "type": "application/json",
+      "bytes": 162667
+    },
+    {
+      "suffix": "report.html",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "bytes": 161645
+    },
+    {
+      "suffix": "regression_test.py",
+      "status": 200,
+      "type": "text/x-python; charset=utf-8",
+      "bytes": 13252
+    }
+  ],
+  "errors": [],
+  "consoleErrors": [],
+  "acceptance_run": "12dda7bf4c834446",
+  "passed": true
+}

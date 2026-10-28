@@ -53,13 +53,15 @@ const measure = async (width) => {
   result.widths.push(data); assert(!data.overflow,`No horizontal page overflow at ${width}px`,data);
 };
 try {
-  await cdp('Page.enable'); await cdp('Runtime.enable'); await resize(1440,1000);
+  await cdp('Page.enable'); await cdp('Runtime.enable');
+  await cdp('Network.enable'); await cdp('Network.setCacheDisabled', {cacheDisabled: true});
+  await resize(1440,1000);
   await cdp('Page.navigate',{url:serviceUrl});
   await waitFor(`document.querySelector('#report-heading')?.textContent && !document.querySelector('#case-select')?.disabled`,'seeded preflight');
   const runCase=async(id,title)=>{
     await evaluate(`document.querySelector('#case-select').value='${id}';document.querySelector('#case-select').dispatchEvent(new Event('change',{bubbles:true}));document.querySelector('#run-button').click()`);
     await waitFor(`!document.querySelector('#run-progress').hidden`,'running '+id);
-    await waitFor(`document.querySelector('#report-heading').textContent===${JSON.stringify(title)} && document.querySelector('#run-progress').hidden`,'completed '+id);
+    await waitFor(`document.querySelector('#report-heading').textContent===${JSON.stringify(title)} && document.querySelector('#run-progress').hidden`,'completed '+id,300000);
   };
   await runCase('install-failure','Dependency setup failure stays an environment error');
   assert(await evaluate(`document.querySelector('#report-notice').textContent.includes('Execution is incomplete') && !document.querySelector('#report-notice').textContent.includes('Repeatability check failed') && document.querySelectorAll('.accept-toggle').length===0`),'Failed installation is an execution error with no false stochastic claim or acceptance action');

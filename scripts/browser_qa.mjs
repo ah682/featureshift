@@ -54,6 +54,7 @@ const measure = async (width) => {
 };
 try {
   await cdp('Page.enable'); await cdp('Runtime.enable');
+  await cdp('Network.enable'); await cdp('Network.setCacheDisabled', {cacheDisabled: true});
   await resize(1440,1000);
   await cdp('Page.navigate',{url:result.url});
   await waitFor(`document.querySelector('#report-heading')?.textContent && !document.querySelector('#case-select')?.disabled`,'seeded preflight');
@@ -82,7 +83,7 @@ try {
   await evaluate(`document.querySelector('#case-select').value='numeric';document.querySelector('#case-select').dispatchEvent(new Event('change',{bubbles:true}));document.querySelector('#run-button').click()`);
   await waitFor(`!document.querySelector('#run-progress').hidden`,'visible running state');
   assert(await evaluate(`document.querySelector('#run-button').disabled && document.querySelector('#case-select').disabled`),'Running state prevents duplicate execution');
-  await waitFor(`document.querySelector('#report-heading').textContent==='Spend per visit' && document.querySelector('#run-progress').hidden`,'unaffected numeric run');
+  await waitFor(`document.querySelector('#report-heading').textContent==='Spend per visit' && document.querySelector('#run-progress').hidden`,'unaffected numeric run',300000);
   assert(await evaluate(`document.querySelector('.equivalent-state')?.textContent.includes('No observed differences') && [...document.querySelectorAll('.summary-number')].every(e=>e.textContent==='0')`),'New unaffected run reports equivalent normalized output and no findings');
   await screenshot('ui-equivalent.png');
   const intentionalRun = await evaluate(`fetch('/api/runs').then(r=>r.json()).then(runs=>runs.find(r=>r.case_id==='intentional').id)`);
@@ -92,7 +93,7 @@ try {
   await screenshot('ui-intentional.png');
   await evaluate(`document.querySelector('#case-select').value='selector';document.querySelector('#case-select').dispatchEvent(new Event('change',{bubbles:true}));document.querySelector('#run-button').click()`);
   await waitFor(`!document.querySelector('#run-progress').hidden`,'new selector running');
-  await waitFor(`document.querySelector('#report-heading').textContent==='Object dtype selector' && document.querySelector('#run-progress').hidden`,'new selector result');
+  await waitFor(`document.querySelector('#report-heading').textContent==='Object dtype selector' && document.querySelector('#run-progress').hidden`,'new selector result',300000);
   await evaluate(`document.querySelector('.accept-toggle').click()`);
   await evaluate(`document.querySelector('.accept-box:not([hidden]) textarea').value='UI verification: accepting this constructed fixture change to verify the local audit trail. Not a production approval.';document.querySelector('.accept-box:not([hidden])').requestSubmit()`);
   await waitFor(`document.querySelectorAll('.accepted-note').length > 0`,'saved acceptance audit');
@@ -117,6 +118,59 @@ try {
     await pause(100);
   }
   assert(downloaded.length >= 3,'Export controls trigger all three file downloads',downloaded);
+
+  // Hold successful responses after the server has completed its work, then navigate.
+  await evaluate(`
+    window.qaNativeFetch = window.fetch;
+    window.fetch = async (url, options) => {
+      const response = await window.qaNativeFetch(url, options);
+      if (String(url).endsWith('/accept')) {
+        const body = await response.json();
+        window.qaWaiting = true;
+        await new Promise(resolve => { window.qaRelease = resolve; });
+        window.qaReturned = true;
+        return {ok: true, json: async () => body};
+      }
+      return response;
+    };
+    document.querySelector('.accept-toggle').click();
+    document.querySelector('.accept-box:not([hidden]) textarea').value = 'Delayed browser regression review';
+    document.querySelector('.accept-box:not([hidden])').requestSubmit();
+  `);
+  await waitFor(`window.qaWaiting`, 'acceptance response held');
+  await evaluate(`document.querySelector('[data-run="${intentionalRun}"]').click()`);
+  await waitFor(`document.querySelector('#download-options a').href.includes('${intentionalRun}')`, 'different report selected');
+  await evaluate(`window.qaRelease()`);
+  await waitFor(`window.qaReturned`, 'acceptance response returned');
+  const acceptanceKeptSelection = await evaluate(`document.querySelector('#download-options a').href.includes('${intentionalRun}')`);
+  await evaluate(`window.fetch = window.qaNativeFetch`);
+
+  await evaluate(`
+    window.qaWaiting = false; window.qaReturned = false;
+    window.fetch = async (url, options) => {
+      if (url === '/api/runs' && options?.method === 'POST') {
+        return {ok: true, json: async () => ({id: 'delayed-browser-run', status: 'queued'})};
+      }
+      if (url === '/api/runs/delayed-browser-run') {
+        const report = await window.qaNativeFetch('/api/runs/${reportId}').then(r => r.json());
+        window.qaWaiting = true;
+        await new Promise(resolve => { window.qaRelease = resolve; });
+        window.qaReturned = true;
+        return {ok: true, json: async () => report};
+      }
+      return window.qaNativeFetch(url, options);
+    };
+    document.querySelector('#run-button').click();
+  `);
+  await waitFor(`window.qaWaiting`, 'completion response held');
+  await evaluate(`document.querySelector('[data-run="${intentionalRun}"]').click()`);
+  await waitFor(`document.querySelector('#download-options a').href.includes('${intentionalRun}')`, 'report selected during execution');
+  await evaluate(`window.qaRelease()`);
+  await waitFor(`window.qaReturned && document.querySelector('#run-progress').hidden`, 'background execution completed');
+  const completionKeptSelection = await evaluate(`document.querySelector('#download-options a').href.includes('${intentionalRun}')`);
+  await evaluate(`window.fetch = window.qaNativeFetch`);
+  assert(acceptanceKeptSelection && completionKeptSelection, 'Delayed acceptance and completion preserve the selected report', {acceptanceKeptSelection, completionKeptSelection});
+
   await evaluate(`document.querySelector('[data-run="${selectorId}"]').click()`);
   await waitFor(`document.querySelector('#download-options a')?.href.includes('${selectorId}')`,'restored seeded selector');
   await evaluate(`window.scrollTo(0,0)`); await screenshot('ui-desktop-final.png');

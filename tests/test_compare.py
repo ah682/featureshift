@@ -59,6 +59,12 @@ def test_allowed_column_reordering_aligns_each_feature_by_name() -> None:
     assert rules(compare_frames(before, after, Contract(column_order=False))) == {"values:x"}
 
 
+def test_unchanged_null_does_not_reclassify_a_value_change() -> None:
+    before = frame([[1], [{"$null": "NA"}]])
+    after = frame([[2], [{"$null": "NA"}]])
+    assert rules(compare_frames(before, after, Contract())) == {"values:value"}
+
+
 def test_missing_feature_is_reported_without_unrelated_value_changes() -> None:
     before = frame([[1, 100], [2, 200]], ("x", "y"))
     after = frame([[1], [2]], ("x",))

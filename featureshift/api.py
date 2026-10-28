@@ -83,6 +83,9 @@ def create_app(state: Path = STATE) -> FastAPI:
         except ValueError as exc:
             slots.release()
             raise HTTPException(422, str(exc)) from exc
+        except Exception:
+            slots.release()
+            raise
 
         def execute():
             try:

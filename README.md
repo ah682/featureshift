@@ -73,8 +73,10 @@ show the error and cannot imply equivalence.
 
 `make evaluate` writes machine-readable results and readable reports under
 `.featureshift/evaluation/`. `make test-fast` runs checks that do not require the
-target environments. `.github/workflows/ci.yml` runs the checks in CI; it is supplied
-configuration, not a claim that a remote CI run occurred.
+target environments. [CI](https://github.com/ah682/featureshift/actions/workflows/ci.yml)
+runs the full suite, evaluation, evidence-integrity checks and browser workflows.
+A separate workflow checks dependency advisories. The
+[October maintenance audit](docs/QUALITY_AUDIT.md) records fixes and verification limits.
 
 To replay a downloaded regression test, use either target interpreter:
 

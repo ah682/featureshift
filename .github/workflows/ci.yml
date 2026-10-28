@@ -2,13 +2,20 @@ name: FeatureShift checks
 on:
   push:
   pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   verify:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: '3.12.3'
       - name: Install pinned setup runner
@@ -17,14 +24,75 @@ jobs:
         run: make setup
       - name: Lint, types and compilation
         run: make check
-      - name: Offline fast checks
-        run: make test-fast
       - name: Real environment acceptance
         run: make test
+      - name: Check cached evidence integrity
+        run: .venv/bin/python scripts/refresh_evidence.py --check
       - name: Labeled diagnostic evaluation
         run: make evaluate
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:
           name: featureshift-evaluation
           path: .featureshift/evaluation/
+          include-hidden-files: true
+          retention-days: 14
+
+  browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.12.3'
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24.16.0'
+      - uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e # v10.3.2
+        with:
+          version: '0.11.28'
+      - run: make setup
+      - name: Exercise browser workflows and delayed responses
+        shell: bash
+        env:
+          FEATURESHIFT_STATE: .featureshift/browser-state
+          FEATURESHIFT_URL: http://127.0.0.1:18765
+          CHROME_DEBUG_URL: http://127.0.0.1:19227
+        run: |
+          .venv/bin/python -m featureshift demo --seed-only
+          .venv/bin/python -m featureshift serve --host 127.0.0.1 --port 18765 > "$RUNNER_TEMP/featureshift-server.log" 2>&1 &
+          server_pid=$!
+          google-chrome --headless=new --remote-debugging-port=19227 --user-data-dir="$RUNNER_TEMP/featureshift-chrome" --no-first-run --disable-dev-shm-usage about:blank > "$RUNNER_TEMP/featureshift-chrome.log" 2>&1 &
+          chrome_pid=$!
+          trap 'kill "$server_pid" "$chrome_pid" 2>/dev/null || true' EXIT
+          curl --fail --silent --show-error --retry 30 --retry-delay 1 --retry-connrefused "$FEATURESHIFT_URL/api/cases"
+          curl --fail --silent --show-error --retry 30 --retry-delay 1 --retry-connrefused "$CHROME_DEBUG_URL/json/version"
+          node scripts/browser_qa.mjs
+          node scripts/browser_failure_qa.mjs
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: browser-verification
+          path: |
+            .featureshift/verification/
+            ${{ runner.temp }}/featureshift-*.log
+          include-hidden-files: true
+          retention-days: 14
+
+  workflow-check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Validate GitHub workflows
+        shell: bash
+        run: |
+          curl -fsSL https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_linux_amd64.tar.gz -o "$RUNNER_TEMP/actionlint.tar.gz"
+          echo "8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8  $RUNNER_TEMP/actionlint.tar.gz" | sha256sum --check
+          tar -xzf "$RUNNER_TEMP/actionlint.tar.gz" -C "$RUNNER_TEMP" actionlint
+          "$RUNNER_TEMP/actionlint" -color

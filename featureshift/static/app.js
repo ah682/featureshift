@@ -283,8 +283,8 @@
       renderReport(report);
       if (state.cases.some((entry) => entry.id === report.case_id)) { $("case-select").value = report.case_id; renderCaseDescription(); }
       if (scroll) $("report-section").scrollIntoView({ behavior: "smooth", block: "start" });
-      if (isActive(report.status)) { setRunning(true); pollRun(id); }
-    } catch (error) { showError(`Could not load this report. ${error.message}`); }
+      if (isActive(report.status)) { setRunning(true); pollRun(id, request); }
+    } catch (error) { if (request === state.request) showError(`Could not load this report. ${error.message}`); }
   }
 
   function setRunning(running) {
@@ -302,16 +302,16 @@
     renderHistory();
   }
 
-  async function pollRun(id) {
+  async function pollRun(id, request) {
     clearTimeout(state.poll);
     try {
       const report = await api(`/api/runs/${encodeURIComponent(id)}`);
       const events = list(report.events);
       const latest = events[events.length - 1];
       $("progress-message").textContent = latest ? eventText(latest) : `${titleCase(report.status)} · Executing the selected repository example.`;
-      if (isActive(report.status)) { state.poll = setTimeout(() => pollRun(id), 1000); return; }
+      if (isActive(report.status)) { state.poll = setTimeout(() => pollRun(id, request), 1000); return; }
       setRunning(false);
-      renderReport(report);
+      if (request === state.request) renderReport(report);
       await refreshRuns();
       announce(`Preflight ${titleCase(report.status)}. ${count(report.summary?.observed_differences)} observed differences.`);
     } catch (error) {
@@ -324,6 +324,7 @@
   async function runPreflight() {
     const caseId = $("case-select").value;
     if (!caseId || state.running) return;
+    const request = ++state.request;
     $("app-alert").hidden = true;
     setRunning(true);
     $("progress-message").textContent = "Submitting the selected reviewed example to the local worker…";
@@ -331,7 +332,7 @@
     try {
       const result = await api("/api/runs", { method: "POST", body: JSON.stringify({ case_id: caseId }) });
       if (!result.id) throw new Error("No run identifier was returned.");
-      await pollRun(result.id);
+      await pollRun(result.id, request);
     } catch (error) { setRunning(false); showError(`Could not start the preflight. ${error.message}`); }
   }
 
@@ -341,13 +342,16 @@
     const reason = form.querySelector("textarea").value.trim();
     if (reason.length < 3) { form.querySelector(".accept-error").textContent = "Add a short reason for the audit record."; return; }
     const button = form.querySelector('[type="submit"]');
+    const request = state.request;
     button.disabled = true; button.textContent = "Saving…";
     try {
       const result = await api(`/api/runs/${encodeURIComponent(state.report.id)}/accept`, { method: "POST", body: JSON.stringify({ finding_id: finding.id, reason }) });
       const report = result.report ?? result;
-      renderReport(report);
-      const findingIndex = list(report.findings).findIndex((entry) => entry.id === finding.id);
-      document.querySelectorAll("#panel-findings .finding > summary")[findingIndex]?.focus();
+      if (request === state.request) {
+        renderReport(report);
+        const findingIndex = list(report.findings).findIndex((entry) => entry.id === finding.id);
+        document.querySelectorAll("#panel-findings .finding > summary")[findingIndex]?.focus();
+      }
       await refreshRuns();
       announce("The intended change was accepted. Its original finding and review reason remain in the audit record.");
     } catch (error) { form.querySelector(".accept-error").textContent = error.message; button.disabled = false; button.textContent = "Save review"; }
