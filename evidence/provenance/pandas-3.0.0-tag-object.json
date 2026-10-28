@@ -1,0 +1,22 @@
+{
+  "node_id": "TA_kwDOAA0YD9oAKGYyNGYwMTA4MzdiNmMwMzNhYTRjZTMwMTQ4OTU0MjgxMWEzNTE4MzU",
+  "sha": "f24f010837b6c033aa4ce301489542811a351835",
+  "url": "https://api.github.com/repos/pandas-dev/pandas/git/tags/f24f010837b6c033aa4ce301489542811a351835",
+  "tagger": {
+    "date": "2026-01-21T13:53:10Z"
+  },
+  "object": {
+    "sha": "366ccdfcd8ed1e5543bfb6d4ee0c9bc519898670",
+    "type": "commit",
+    "url": "https://api.github.com/repos/pandas-dev/pandas/git/commits/366ccdfcd8ed1e5543bfb6d4ee0c9bc519898670"
+  },
+  "tag": "v3.0.0",
+  "message": "Version 3.0.0\n",
+  "verification": {
+    "verified": false,
+    "reason": "unsigned",
+    "signature": null,
+    "payload": null,
+    "verified_at": null
+  }
+}

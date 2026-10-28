@@ -1,0 +1,29 @@
+name: FeatureShift checks
+on:
+  push:
+  pull_request:
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.3'
+      - name: Install pinned setup runner
+        run: python -m pip install uv==0.11.28
+      - name: Setup pinned application and pandas pair
+        run: make setup
+      - name: Lint, types and compilation
+        run: make check
+      - name: Offline fast checks
+        run: make test-fast
+      - name: Real environment acceptance
+        run: make test
+      - name: Labeled diagnostic evaluation
+        run: make evaluate
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: featureshift-evaluation
+          path: .featureshift/evaluation/

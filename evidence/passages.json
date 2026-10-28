@@ -1,0 +1,698 @@
+[
+  {
+    "id": "pandas-2.3.3-strings:inference",
+    "source_id": "pandas-2.3.3-strings",
+    "title": "Inferred string dtype changes from object to str",
+    "start": 2284,
+    "end": 4113,
+    "offset_unit": "unicode_codepoints",
+    "passage_hash": "sha256:da898011eac6a0f3442186827873af88733d7b1ca5032c4c647bf91e3f22b09f",
+    "keywords": [
+      "inferred",
+      "inference",
+      "constructor",
+      "string",
+      "dtype",
+      "text",
+      "read_csv",
+      "feature"
+    ],
+    "assertions": [
+      {
+        "key": "inferred_string_dtype",
+        "value": "str",
+        "behavior_version": "3.0.0"
+      }
+    ],
+    "applies_to": [
+      "2.3.3",
+      "3.0.0"
+    ]
+  },
+  {
+    "id": "pandas-2.3.3-strings:dtype-check",
+    "source_id": "pandas-2.3.3-strings",
+    "title": "Object dtype checks stop identifying inferred strings",
+    "start": 4231,
+    "end": 5735,
+    "offset_unit": "unicode_codepoints",
+    "passage_hash": "sha256:77fde69b6ca3cecdee8a37b868b095e0a298b2c3458c97c8807d56214d90957d",
+    "keywords": [
+      "dtype",
+      "object",
+      "string",
+      "check",
+      "is_string_dtype",
+      "feature",
+      "selector"
+    ],
+    "assertions": [
+      {
+        "key": "inferred_string_dtype",
+        "value": "str",
+        "behavior_version": "3.0.0"
+      }
+    ],
+    "applies_to": [
+      "2.3.3",
+      "3.0.0"
+    ]
+  },
+  {
+    "id": "pandas-2.3.3-strings:select-dtypes",
+    "source_id": "pandas-2.3.3-strings",
+    "title": "Selecting string columns across pandas 2.x and 3.x",
+    "start": 6806,
+    "end": 7329,
+    "offset_unit": "unicode_codepoints",
+    "passage_hash": "sha256:f3a2ad645e7ddae309e3179b4b374a0b44e9dd8ae003c69069440fca7aacd81c",
+    "keywords": [
+      "select_dtypes",
+      "object",
+      "string",
+      "feature",
+      "selector",
+      "include",
+      "selection"
+    ],
+    "assertions": [
+      {
+        "key": "select_strings_compatible",
+        "value": "object_and_string",
+        "behavior_version": "3.0.0"
+      }
+    ],
+    "applies_to": [
+      "2.3.3",
+      "3.0.0"
+    ]
+  },
+  {
+    "id": "pandas-2.3.3-strings:null-sentinel",
+    "source_id": "pandas-2.3.3-strings",
+    "title": "Inferred string missing value sentinel becomes NaN",
+    "start": 7332,
+    "end": 8967,
+    "offset_unit": "unicode_codepoints",
+    "passage_hash": "sha256:26af50f91012eadc2168b26704c2e98d8865a0d3d9846443c83da7e1d684af75",
+    "keywords": [
+      "null",
+      "missing",
+      "sentinel",
+      "None",
+      "NaN",
+      "isna",
+      "string",
+      "dtype"
+    ],
+    "assertions": [
+      {
+        "key": "string_missing_sentinel",
+        "value": "nan",
+        "behavior_version": "3.0.0"
+      }
+    ],
+    "applies_to": [
+      "2.3.3",
+      "3.0.0"
+    ]
+  },
+  {
+    "id": "pandas-2.3.3-strings:setitem",
+    "source_id": "pandas-2.3.3-strings",
+    "title": "String columns reject non-string assignment",
+    "start": 8969,
+    "end": 10335,
+    "offset_unit": "unicode_codepoints",
+    "passage_hash": "sha256:dd82fec9b51289204a6b11e02680aadc8a0870c71b96a2bd3f184c1aedef656e",
+    "keywords": [
+      "setitem",
+      "assign",
+      "numeric",
+      "nonstring",
+      "string",
+      "typeerror"
+    ],
+    "assertions": [
+      {
+        "key": "string_numeric_assignment",
+        "value": "error",
+        "behavior_version": "3.0.0"
+      }
+    ],
+    "applies_to": [
+      "2.3.3",
+      "3.0.0"
+    ]
+  },
+  {
+    "id": "pandas-2.3.3-strings:astype-str",
+    "source_id": "pandas-2.3.3-strings",
+    "title": "astype(str) preserves missing values in pandas 3",
+    "start": 12676,
+    "end": 14846,
+    "offset_unit": "unicode_codepoints",
+    "passage_hash": "sha256:a16ab9e1cd93a8426905706839717cb8a4643b8a5d80b4ede933f055ecc158b4",
+    "keywords": [
+      "astype",
+      "str",
+      "null",
+      "missing",
+      "conversion",
+      "string",
+      "nan",
+      "None",
+      "map",
+      "preserve"
+    ],
+    "assertions": [
+      {
+        "key": "astype_str_null",
+        "value": "preserved",
+        "behavior_version": "3.0.0"
+      }
+    ],
+    "applies_to": [
+      "2.3.3",
+      "3.0.0"
+    ]
+  },
+  {
+    "id": "pandas-2.3.3-cow:mutation",
+    "source_id": "pandas-2.3.3-cow",
+    "title": "A derived Series no longer mutates its parent DataFrame",
+    "start": 849,
+    "end": 1742,
+    "offset_unit": "unicode_codepoints",
+    "passage_hash": "sha256:fabd33c792140ed8fd4b027bc24fc0c23226928d100c2a17e0b72be461ee56c9",
+    "keywords": [
+      "copy",
+      "on",
+      "write",
+      "cow",
+      "derived",
+      "subset",
+      "mutate",
+      "parent",
+      "assignment",
+      "iloc"
+    ],
+    "assertions": [
+      {
+        "key": "derived_mutation_parent",
+        "value": "unchanged",
+        "behavior_version": "3.0.0"
+      }
+    ],
+    "applies_to": [
+      "2.3.3",
+      "3.0.0"
+    ]
+  },
+  {
+    "id": "pandas-2.3.3-cow:chained-assignment",
+    "source_id": "pandas-2.3.3-cow",
+    "title": "Chained assignment cannot update a DataFrame under Copy-on-Write",
+    "start": 7721,
+    "end": 8650,
+    "offset_unit": "unicode_codepoints",
+    "passage_hash": "sha256:90262f7a058578dc007b3d6e9f1226914793fe7796b75ed99def605412ec6cb1",
+    "keywords": [
+      "chained",
+      "assignment",
+      "copy",
+      "on",
+      "write",
+      "cow",
+      "loc",
+      "inplace",
+      "mask"
+    ],
+    "assertions": [
+      {
+        "key": "chained_assignment_parent",
+        "value": "unchanged",
+        "behavior_version": "3.0.0"
+      }
+    ],
+    "applies_to": [
+      "2.3.3",
+      "3.0.0"
+    ]
+  },
+  {
+    "id": "pandas-2.3.3-cow:readonly-array",
+    "source_id": "pandas-2.3.3-cow",
+    "title": "Shared NumPy arrays are read-only under Copy-on-Write",
+    "start": 8685,
+    "end": 10698,
+    "offset_unit": "unicode_codepoints",
+    "passage_hash": "sha256:c4e526e1d3de2a2844f1c49d6e49198dc1675a64e2ac6eb025cc3dbc31f5bf85",
+    "keywords": [
+      "to_numpy",
+      "numpy",
+      "array",
+      "readonly",
+      "read",
+      "only",
+      "cow",
+      "copy",
+      "on",
+      "write",
+      "shuffle"
+    ],
+    "assertions": [
+      {
+        "key": "shared_numpy_array_writeable",
+        "value": "false",
+        "behavior_version": "3.0.0"
+      }
+    ],
+    "applies_to": [
+      "2.3.3",
+      "3.0.0"
+    ]
+  },
+  {
+    "id": "pandas-2.3.3-sum-api:sum-min-count",
+    "source_id": "pandas-2.3.3-sum-api",
+    "title": "Empty and all-null sum; the explicit min_count contract",
+    "start": 464812,
+    "end": 466202,
+    "offset_unit": "unicode_codepoints",
+    "passage_hash": "sha256:9dd7988eb13eca2216128c476faaf998a665f94f9bde8949f1501c57ce63cfd8",
+    "keywords": [
+      "sum",
+      "min_count",
+      "null",
+      "empty",
+      "allna",
+      "skipna",
+      "reduction",
+      "zero"
+    ],
+    "assertions": [
+      {
+        "key": "sum_default_empty",
+        "value": "zero",
+        "behavior_version": "2.3.3"
+      }
+    ],
+    "applies_to": [
+      "2.3.3"
+    ]
+  },
+  {
+    "id": "pandas-3.0.0-strings:inference",
+    "source_id": "pandas-3.0.0-strings",
+    "title": "Inferred string dtype changes from object to str",
+    "start": 2658,
+    "end": 4528,
+    "offset_unit": "unicode_codepoints",
+    "passage_hash": "sha256:f75e5387ebf5d9b3ef39e30e06b2f50ec7e7156a3b62f132bdac817f7b0624b1",
+    "keywords": [
+      "inferred",
+      "inference",
+      "constructor",
+      "string",
+      "dtype",
+      "text",
+      "read_csv",
+      "feature"
+    ],
+    "assertions": [
+      {
+        "key": "inferred_string_dtype",
+        "value": "str",
+        "behavior_version": "3.0.0"
+      }
+    ],
+    "applies_to": [
+      "2.3.3",
+      "3.0.0"
+    ]
+  },
+  {
+    "id": "pandas-3.0.0-strings:dtype-check",
+    "source_id": "pandas-3.0.0-strings",
+    "title": "Object dtype checks stop identifying inferred strings",
+    "start": 4646,
+    "end": 6150,
+    "offset_unit": "unicode_codepoints",
+    "passage_hash": "sha256:77fde69b6ca3cecdee8a37b868b095e0a298b2c3458c97c8807d56214d90957d",
+    "keywords": [
+      "dtype",
+      "object",
+      "string",
+      "check",
+      "is_string_dtype",
+      "feature",
+      "selector"
+    ],
+    "assertions": [
+      {
+        "key": "inferred_string_dtype",
+        "value": "str",
+        "behavior_version": "3.0.0"
+      }
+    ],
+    "applies_to": [
+      "2.3.3",
+      "3.0.0"
+    ]
+  },
+  {
+    "id": "pandas-3.0.0-strings:select-dtypes",
+    "source_id": "pandas-3.0.0-strings",
+    "title": "Selecting string columns across pandas 2.x and 3.x",
+    "start": 7258,
+    "end": 7781,
+    "offset_unit": "unicode_codepoints",
+    "passage_hash": "sha256:f3a2ad645e7ddae309e3179b4b374a0b44e9dd8ae003c69069440fca7aacd81c",
+    "keywords": [
+      "select_dtypes",
+      "object",
+      "string",
+      "feature",
+      "selector",
+      "include",
+      "selection"
+    ],
+    "assertions": [
+      {
+        "key": "select_strings_compatible",
+        "value": "object_and_string",
+        "behavior_version": "3.0.0"
+      }
+    ],
+    "applies_to": [
+      "2.3.3",
+      "3.0.0"
+    ]
+  },
+  {
+    "id": "pandas-3.0.0-strings:null-sentinel",
+    "source_id": "pandas-3.0.0-strings",
+    "title": "Inferred string missing value sentinel becomes NaN",
+    "start": 7784,
+    "end": 9419,
+    "offset_unit": "unicode_codepoints",
+    "passage_hash": "sha256:26af50f91012eadc2168b26704c2e98d8865a0d3d9846443c83da7e1d684af75",
+    "keywords": [
+      "null",
+      "missing",
+      "sentinel",
+      "None",
+      "NaN",
+      "isna",
+      "string",
+      "dtype"
+    ],
+    "assertions": [
+      {
+        "key": "string_missing_sentinel",
+        "value": "nan",
+        "behavior_version": "3.0.0"
+      }
+    ],
+    "applies_to": [
+      "2.3.3",
+      "3.0.0"
+    ]
+  },
+  {
+    "id": "pandas-3.0.0-strings:setitem",
+    "source_id": "pandas-3.0.0-strings",
+    "title": "String columns reject non-string assignment",
+    "start": 9421,
+    "end": 10787,
+    "offset_unit": "unicode_codepoints",
+    "passage_hash": "sha256:dd82fec9b51289204a6b11e02680aadc8a0870c71b96a2bd3f184c1aedef656e",
+    "keywords": [
+      "setitem",
+      "assign",
+      "numeric",
+      "nonstring",
+      "string",
+      "typeerror"
+    ],
+    "assertions": [
+      {
+        "key": "string_numeric_assignment",
+        "value": "error",
+        "behavior_version": "3.0.0"
+      }
+    ],
+    "applies_to": [
+      "2.3.3",
+      "3.0.0"
+    ]
+  },
+  {
+    "id": "pandas-3.0.0-strings:astype-str",
+    "source_id": "pandas-3.0.0-strings",
+    "title": "astype(str) preserves missing values in pandas 3",
+    "start": 13128,
+    "end": 15298,
+    "offset_unit": "unicode_codepoints",
+    "passage_hash": "sha256:a16ab9e1cd93a8426905706839717cb8a4643b8a5d80b4ede933f055ecc158b4",
+    "keywords": [
+      "astype",
+      "str",
+      "null",
+      "missing",
+      "conversion",
+      "string",
+      "nan",
+      "None",
+      "map",
+      "preserve"
+    ],
+    "assertions": [
+      {
+        "key": "astype_str_null",
+        "value": "preserved",
+        "behavior_version": "3.0.0"
+      }
+    ],
+    "applies_to": [
+      "2.3.3",
+      "3.0.0"
+    ]
+  },
+  {
+    "id": "pandas-3.0.0-cow:mutation",
+    "source_id": "pandas-3.0.0-cow",
+    "title": "A derived Series no longer mutates its parent DataFrame",
+    "start": 693,
+    "end": 1640,
+    "offset_unit": "unicode_codepoints",
+    "passage_hash": "sha256:7095b55c570ed01acda1097674bd244eb9764a3804a325982bc34758073453b4",
+    "keywords": [
+      "copy",
+      "on",
+      "write",
+      "cow",
+      "derived",
+      "subset",
+      "mutate",
+      "parent",
+      "assignment",
+      "iloc"
+    ],
+    "assertions": [
+      {
+        "key": "derived_mutation_parent",
+        "value": "unchanged",
+        "behavior_version": "3.0.0"
+      }
+    ],
+    "applies_to": [
+      "2.3.3",
+      "3.0.0"
+    ]
+  },
+  {
+    "id": "pandas-3.0.0-cow:chained-assignment",
+    "source_id": "pandas-3.0.0-cow",
+    "title": "Chained assignment cannot update a DataFrame under Copy-on-Write",
+    "start": 7749,
+    "end": 8698,
+    "offset_unit": "unicode_codepoints",
+    "passage_hash": "sha256:2089351c45e62d458ff007e91eebd3aae80eb2f6e5b690ea46c4536327329165",
+    "keywords": [
+      "chained",
+      "assignment",
+      "copy",
+      "on",
+      "write",
+      "cow",
+      "loc",
+      "inplace",
+      "mask"
+    ],
+    "assertions": [
+      {
+        "key": "chained_assignment_parent",
+        "value": "unchanged",
+        "behavior_version": "3.0.0"
+      }
+    ],
+    "applies_to": [
+      "2.3.3",
+      "3.0.0"
+    ]
+  },
+  {
+    "id": "pandas-3.0.0-cow:readonly-array",
+    "source_id": "pandas-3.0.0-cow",
+    "title": "Shared NumPy arrays are read-only under Copy-on-Write",
+    "start": 8733,
+    "end": 10746,
+    "offset_unit": "unicode_codepoints",
+    "passage_hash": "sha256:3abbe6b184a0ca41726f1bce25364f2901ccc6881dda2810ce376e33dd4fd451",
+    "keywords": [
+      "to_numpy",
+      "numpy",
+      "array",
+      "readonly",
+      "read",
+      "only",
+      "cow",
+      "copy",
+      "on",
+      "write",
+      "shuffle"
+    ],
+    "assertions": [
+      {
+        "key": "shared_numpy_array_writeable",
+        "value": "false",
+        "behavior_version": "3.0.0"
+      }
+    ],
+    "applies_to": [
+      "2.3.3",
+      "3.0.0"
+    ]
+  },
+  {
+    "id": "pandas-3.0.0-sum-api:sum-min-count",
+    "source_id": "pandas-3.0.0-sum-api",
+    "title": "Empty and all-null sum; the explicit min_count contract",
+    "start": 450431,
+    "end": 452049,
+    "offset_unit": "unicode_codepoints",
+    "passage_hash": "sha256:8c606d86077914c3c3c93cb0855a539e59f226c491b4bf342b70608cb80e4e0c",
+    "keywords": [
+      "sum",
+      "min_count",
+      "null",
+      "empty",
+      "allna",
+      "skipna",
+      "reduction",
+      "zero"
+    ],
+    "assertions": [
+      {
+        "key": "sum_default_empty",
+        "value": "zero",
+        "behavior_version": "3.0.0"
+      }
+    ],
+    "applies_to": [
+      "3.0.0"
+    ]
+  },
+  {
+    "id": "pandas-3.0.0-release-notes:datetime-resolution",
+    "source_id": "pandas-3.0.0-release-notes",
+    "title": "Datetime resolution inference and integer conversion",
+    "start": 23058,
+    "end": 26395,
+    "offset_unit": "unicode_codepoints",
+    "passage_hash": "sha256:a843b771474046d893d0118808e279567e173cb33480cba87c206dbe35905649",
+    "keywords": [
+      "datetime",
+      "timestamp",
+      "datetime64",
+      "resolution",
+      "unit",
+      "microseconds",
+      "nanoseconds",
+      "to_datetime",
+      "astype",
+      "int64",
+      "epoch"
+    ],
+    "assertions": [
+      {
+        "key": "datetime_string_default_unit",
+        "value": "us",
+        "behavior_version": "3.0.0"
+      }
+    ],
+    "applies_to": [
+      "2.3.3",
+      "3.0.0"
+    ]
+  },
+  {
+    "id": "pandas-3.0.0-release-notes:groupby-observed",
+    "source_id": "pandas-3.0.0-release-notes",
+    "title": "Categorical groupby observed now defaults to True",
+    "start": 59922,
+    "end": 60050,
+    "offset_unit": "unicode_codepoints",
+    "passage_hash": "sha256:bcb0fc8fcc2ecb05e87963c0a40c01c60713bafcf0d5b8ac616e223cd74de0ee",
+    "keywords": [
+      "categorical",
+      "category",
+      "groupby",
+      "observed",
+      "unobserved",
+      "groups",
+      "default"
+    ],
+    "assertions": [
+      {
+        "key": "groupby_observed_default",
+        "value": "true",
+        "behavior_version": "3.0.0"
+      }
+    ],
+    "applies_to": [
+      "2.3.3",
+      "3.0.0"
+    ]
+  },
+  {
+    "id": "pandas-3.0.0-release-notes:string-release",
+    "source_id": "pandas-3.0.0-release-notes",
+    "title": "Dedicated string dtype by default",
+    "start": 697,
+    "end": 2715,
+    "offset_unit": "unicode_codepoints",
+    "passage_hash": "sha256:dc874303f1ae61fba834ddd77c85ea853a1bdee12ba63374be12f476bda35715",
+    "keywords": [
+      "string",
+      "default",
+      "inferred",
+      "dtype",
+      "object",
+      "feature"
+    ],
+    "assertions": [
+      {
+        "key": "inferred_string_dtype",
+        "value": "str",
+        "behavior_version": "3.0.0"
+      }
+    ],
+    "applies_to": [
+      "2.3.3",
+      "3.0.0"
+    ]
+  }
+]

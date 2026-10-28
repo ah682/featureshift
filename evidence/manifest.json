@@ -1,0 +1,291 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-10-13T16:39:28Z",
+  "package": "pandas",
+  "supported_pairs": [
+    [
+      "2.3.3",
+      "3.0.0"
+    ]
+  ],
+  "releases": {
+    "2.3.3": {
+      "commit": "9c8bc3e55188c8aff37207a74f1dd144980b8874",
+      "tag_object": "1efe64945e7faf6255e83ea9df50abaec9a5bc69",
+      "published_at": "2025-09-29T22:12:37Z"
+    },
+    "3.0.0": {
+      "commit": "366ccdfcd8ed1e5543bfb6d4ee0c9bc519898670",
+      "tag_object": "f24f010837b6c033aa4ce301489542811a351835",
+      "published_at": "2026-01-21T13:53:10Z"
+    }
+  },
+  "retrieval": "deterministic_keyword",
+  "sources": [
+    {
+      "id": "pandas-2.3.3-strings",
+      "package": "pandas",
+      "source_version": "2.3.3",
+      "applies_to": [
+        "2.3.3",
+        "3.0.0"
+      ],
+      "title": "Migration guide for the new string data type (pandas 3.0)",
+      "url": "https://github.com/pandas-dev/pandas/blob/9c8bc3e55188c8aff37207a74f1dd144980b8874/doc/source/user_guide/migration-3-strings.rst",
+      "download_url": "https://raw.githubusercontent.com/pandas-dev/pandas/9c8bc3e55188c8aff37207a74f1dd144980b8874/doc/source/user_guide/migration-3-strings.rst",
+      "repository_path": "doc/source/user_guide/migration-3-strings.rst",
+      "source_commit": "9c8bc3e55188c8aff37207a74f1dd144980b8874",
+      "release_tag": "v2.3.3",
+      "published_at": "2025-09-29T22:12:37Z",
+      "published_at_basis": "annotated release tag timestamp; conservative availability of this exact snapshot",
+      "fetched_at": "2026-10-13T16:39:28Z",
+      "content_hash": "sha256:e34d26353965128693731dec3fc657589ef16340a61ab26fe93e37cc3f35c268",
+      "snapshot_path": "snapshots/pandas-2.3.3-strings.rst",
+      "byte_length": 15975,
+      "license": "BSD-3-Clause",
+      "license_path": "licenses/pandas-2.3.3-LICENSE.txt",
+      "license_url": "https://github.com/pandas-dev/pandas/blob/9c8bc3e55188c8aff37207a74f1dd144980b8874/LICENSE",
+      "retrieval_eligible": true,
+      "source_kind": "official_release_documentation"
+    },
+    {
+      "id": "pandas-2.3.3-cow",
+      "package": "pandas",
+      "source_version": "2.3.3",
+      "applies_to": [
+        "2.3.3",
+        "3.0.0"
+      ],
+      "title": "Copy-on-Write (CoW) user guide",
+      "url": "https://github.com/pandas-dev/pandas/blob/9c8bc3e55188c8aff37207a74f1dd144980b8874/doc/source/user_guide/copy_on_write.rst",
+      "download_url": "https://raw.githubusercontent.com/pandas-dev/pandas/9c8bc3e55188c8aff37207a74f1dd144980b8874/doc/source/user_guide/copy_on_write.rst",
+      "repository_path": "doc/source/user_guide/copy_on_write.rst",
+      "source_commit": "9c8bc3e55188c8aff37207a74f1dd144980b8874",
+      "release_tag": "v2.3.3",
+      "published_at": "2025-09-29T22:12:37Z",
+      "published_at_basis": "annotated release tag timestamp; conservative availability of this exact snapshot",
+      "fetched_at": "2026-10-13T16:39:28Z",
+      "content_hash": "sha256:a2588bf8a7f66206b831cdf1f6b323696381522a3c3397a42652143329beb278",
+      "snapshot_path": "snapshots/pandas-2.3.3-cow.rst",
+      "byte_length": 11669,
+      "license": "BSD-3-Clause",
+      "license_path": "licenses/pandas-2.3.3-LICENSE.txt",
+      "license_url": "https://github.com/pandas-dev/pandas/blob/9c8bc3e55188c8aff37207a74f1dd144980b8874/LICENSE",
+      "retrieval_eligible": true,
+      "source_kind": "official_release_documentation"
+    },
+    {
+      "id": "pandas-2.3.3-sum-api",
+      "package": "pandas",
+      "source_version": "2.3.3",
+      "applies_to": [
+        "2.3.3"
+      ],
+      "title": "Series.sum API documentation source",
+      "url": "https://github.com/pandas-dev/pandas/blob/9c8bc3e55188c8aff37207a74f1dd144980b8874/pandas/core/generic.py",
+      "download_url": "https://raw.githubusercontent.com/pandas-dev/pandas/9c8bc3e55188c8aff37207a74f1dd144980b8874/pandas/core/generic.py",
+      "repository_path": "pandas/core/generic.py",
+      "source_commit": "9c8bc3e55188c8aff37207a74f1dd144980b8874",
+      "release_tag": "v2.3.3",
+      "published_at": "2025-09-29T22:12:37Z",
+      "published_at_basis": "annotated release tag timestamp; conservative availability of this exact snapshot",
+      "fetched_at": "2026-10-13T16:39:28Z",
+      "content_hash": "sha256:a6a4b494c8896a26c1abe527e6a0d567ea9863dc55726b7bec3c852ff9f81809",
+      "snapshot_path": "snapshots/pandas-2.3.3-sum-api.py",
+      "byte_length": 476871,
+      "license": "BSD-3-Clause",
+      "license_path": "licenses/pandas-2.3.3-LICENSE.txt",
+      "license_url": "https://github.com/pandas-dev/pandas/blob/9c8bc3e55188c8aff37207a74f1dd144980b8874/LICENSE",
+      "retrieval_eligible": true,
+      "source_kind": "official_release_documentation"
+    },
+    {
+      "id": "pandas-2.3.3-release-notes",
+      "package": "pandas",
+      "source_version": "2.3.3",
+      "applies_to": [
+        "2.3.3",
+        "3.0.0"
+      ],
+      "title": "What\u2019s new in pandas 2.3.3",
+      "url": "https://github.com/pandas-dev/pandas/blob/9c8bc3e55188c8aff37207a74f1dd144980b8874/doc/source/whatsnew/v2.3.3.rst",
+      "download_url": "https://raw.githubusercontent.com/pandas-dev/pandas/9c8bc3e55188c8aff37207a74f1dd144980b8874/doc/source/whatsnew/v2.3.3.rst",
+      "repository_path": "doc/source/whatsnew/v2.3.3.rst",
+      "source_commit": "9c8bc3e55188c8aff37207a74f1dd144980b8874",
+      "release_tag": "v2.3.3",
+      "published_at": "2025-09-29T22:12:37Z",
+      "published_at_basis": "annotated release tag timestamp; conservative availability of this exact snapshot",
+      "fetched_at": "2026-10-13T16:39:28Z",
+      "content_hash": "sha256:1e8afa9dea98d3dd2b04de0b399697b406bf52013521339583f61827a4f133d7",
+      "snapshot_path": "snapshots/pandas-2.3.3-release-notes.rst",
+      "byte_length": 3563,
+      "license": "BSD-3-Clause",
+      "license_path": "licenses/pandas-2.3.3-LICENSE.txt",
+      "license_url": "https://github.com/pandas-dev/pandas/blob/9c8bc3e55188c8aff37207a74f1dd144980b8874/LICENSE",
+      "retrieval_eligible": true,
+      "source_kind": "official_release_documentation"
+    },
+    {
+      "id": "pandas-3.0.0-strings",
+      "package": "pandas",
+      "source_version": "3.0.0",
+      "applies_to": [
+        "2.3.3",
+        "3.0.0"
+      ],
+      "title": "Migration guide for the new string data type (pandas 3.0)",
+      "url": "https://github.com/pandas-dev/pandas/blob/366ccdfcd8ed1e5543bfb6d4ee0c9bc519898670/doc/source/user_guide/migration-3-strings.rst",
+      "download_url": "https://raw.githubusercontent.com/pandas-dev/pandas/366ccdfcd8ed1e5543bfb6d4ee0c9bc519898670/doc/source/user_guide/migration-3-strings.rst",
+      "repository_path": "doc/source/user_guide/migration-3-strings.rst",
+      "source_commit": "366ccdfcd8ed1e5543bfb6d4ee0c9bc519898670",
+      "release_tag": "v3.0.0",
+      "published_at": "2026-01-21T13:53:10Z",
+      "published_at_basis": "annotated release tag timestamp; conservative availability of this exact snapshot",
+      "fetched_at": "2026-10-13T16:39:28Z",
+      "content_hash": "sha256:b10b5400bc9dd59da4cae6cca7554e8cc859b70e8245b306870e3cef1a1a8d6d",
+      "snapshot_path": "snapshots/pandas-3.0.0-strings.rst",
+      "byte_length": 17235,
+      "license": "BSD-3-Clause",
+      "license_path": "licenses/pandas-3.0.0-LICENSE.txt",
+      "license_url": "https://github.com/pandas-dev/pandas/blob/366ccdfcd8ed1e5543bfb6d4ee0c9bc519898670/LICENSE",
+      "retrieval_eligible": true,
+      "source_kind": "official_release_documentation"
+    },
+    {
+      "id": "pandas-3.0.0-cow",
+      "package": "pandas",
+      "source_version": "3.0.0",
+      "applies_to": [
+        "2.3.3",
+        "3.0.0"
+      ],
+      "title": "Copy-on-Write (CoW) user guide",
+      "url": "https://github.com/pandas-dev/pandas/blob/366ccdfcd8ed1e5543bfb6d4ee0c9bc519898670/doc/source/user_guide/copy_on_write.rst",
+      "download_url": "https://raw.githubusercontent.com/pandas-dev/pandas/366ccdfcd8ed1e5543bfb6d4ee0c9bc519898670/doc/source/user_guide/copy_on_write.rst",
+      "repository_path": "doc/source/user_guide/copy_on_write.rst",
+      "source_commit": "366ccdfcd8ed1e5543bfb6d4ee0c9bc519898670",
+      "release_tag": "v3.0.0",
+      "published_at": "2026-01-21T13:53:10Z",
+      "published_at_basis": "annotated release tag timestamp; conservative availability of this exact snapshot",
+      "fetched_at": "2026-10-13T16:39:28Z",
+      "content_hash": "sha256:d984792d9996fc877d701e31f7abddd2f090267e3d0ea1beb2e3f4e8ba5a4ca4",
+      "snapshot_path": "snapshots/pandas-3.0.0-cow.rst",
+      "byte_length": 11306,
+      "license": "BSD-3-Clause",
+      "license_path": "licenses/pandas-3.0.0-LICENSE.txt",
+      "license_url": "https://github.com/pandas-dev/pandas/blob/366ccdfcd8ed1e5543bfb6d4ee0c9bc519898670/LICENSE",
+      "retrieval_eligible": true,
+      "source_kind": "official_release_documentation"
+    },
+    {
+      "id": "pandas-3.0.0-sum-api",
+      "package": "pandas",
+      "source_version": "3.0.0",
+      "applies_to": [
+        "3.0.0"
+      ],
+      "title": "Series.sum API documentation source",
+      "url": "https://github.com/pandas-dev/pandas/blob/366ccdfcd8ed1e5543bfb6d4ee0c9bc519898670/pandas/core/generic.py",
+      "download_url": "https://raw.githubusercontent.com/pandas-dev/pandas/366ccdfcd8ed1e5543bfb6d4ee0c9bc519898670/pandas/core/generic.py",
+      "repository_path": "pandas/core/generic.py",
+      "source_commit": "366ccdfcd8ed1e5543bfb6d4ee0c9bc519898670",
+      "release_tag": "v3.0.0",
+      "published_at": "2026-01-21T13:53:10Z",
+      "published_at_basis": "annotated release tag timestamp; conservative availability of this exact snapshot",
+      "fetched_at": "2026-10-13T16:39:28Z",
+      "content_hash": "sha256:947ccd4101d90617608d4d623387720fba98683d6e8c9f1c1c2faf9f53b439f6",
+      "snapshot_path": "snapshots/pandas-3.0.0-sum-api.py",
+      "byte_length": 463223,
+      "license": "BSD-3-Clause",
+      "license_path": "licenses/pandas-3.0.0-LICENSE.txt",
+      "license_url": "https://github.com/pandas-dev/pandas/blob/366ccdfcd8ed1e5543bfb6d4ee0c9bc519898670/LICENSE",
+      "retrieval_eligible": true,
+      "source_kind": "official_release_documentation"
+    },
+    {
+      "id": "pandas-3.0.0-release-notes",
+      "package": "pandas",
+      "source_version": "3.0.0",
+      "applies_to": [
+        "2.3.3",
+        "3.0.0"
+      ],
+      "title": "What\u2019s new in pandas 3.0.0",
+      "url": "https://github.com/pandas-dev/pandas/blob/366ccdfcd8ed1e5543bfb6d4ee0c9bc519898670/doc/source/whatsnew/v3.0.0.rst",
+      "download_url": "https://raw.githubusercontent.com/pandas-dev/pandas/366ccdfcd8ed1e5543bfb6d4ee0c9bc519898670/doc/source/whatsnew/v3.0.0.rst",
+      "repository_path": "doc/source/whatsnew/v3.0.0.rst",
+      "source_commit": "366ccdfcd8ed1e5543bfb6d4ee0c9bc519898670",
+      "release_tag": "v3.0.0",
+      "published_at": "2026-01-21T13:53:10Z",
+      "published_at_basis": "annotated release tag timestamp; conservative availability of this exact snapshot",
+      "fetched_at": "2026-10-13T16:39:28Z",
+      "content_hash": "sha256:b9d35ef57c058a69e7e6b5d595bbd059d95763465dd65dd365efe5e815af7bf2",
+      "snapshot_path": "snapshots/pandas-3.0.0-release-notes.rst",
+      "byte_length": 122387,
+      "license": "BSD-3-Clause",
+      "license_path": "licenses/pandas-3.0.0-LICENSE.txt",
+      "license_url": "https://github.com/pandas-dev/pandas/blob/366ccdfcd8ed1e5543bfb6d4ee0c9bc519898670/LICENSE",
+      "retrieval_eligible": true,
+      "source_kind": "official_release_documentation"
+    },
+    {
+      "id": "pandas-2.3.3-historical-astype-test",
+      "package": "pandas",
+      "source_version": "2.3.3",
+      "applies_to": [
+        "2.3.3"
+      ],
+      "title": "pandas Series.astype historical regression tests",
+      "url": "https://github.com/pandas-dev/pandas/blob/9c8bc3e55188c8aff37207a74f1dd144980b8874/pandas/tests/series/methods/test_astype.py",
+      "download_url": "https://raw.githubusercontent.com/pandas-dev/pandas/9c8bc3e55188c8aff37207a74f1dd144980b8874/pandas/tests/series/methods/test_astype.py",
+      "repository_path": "pandas/tests/series/methods/test_astype.py",
+      "source_commit": "9c8bc3e55188c8aff37207a74f1dd144980b8874",
+      "release_tag": "v2.3.3",
+      "published_at": "2025-09-29T22:12:37Z",
+      "published_at_basis": "annotated release tag timestamp; conservative availability of this exact snapshot",
+      "fetched_at": "2026-10-13T16:39:28Z",
+      "content_hash": "sha256:facf83a8fef38189442acd9a6a774299751f7eda3019a75890fdf03e9fd7c46e",
+      "snapshot_path": "snapshots/pandas-2.3.3-historical-astype-test.py",
+      "byte_length": 25745,
+      "license": "BSD-3-Clause",
+      "license_path": "licenses/pandas-2.3.3-LICENSE.txt",
+      "license_url": "https://github.com/pandas-dev/pandas/blob/9c8bc3e55188c8aff37207a74f1dd144980b8874/LICENSE",
+      "retrieval_eligible": false,
+      "source_kind": "historical_regression_test"
+    },
+    {
+      "id": "pandas-2.3.3-historical-string-test",
+      "package": "pandas",
+      "source_version": "2.3.3",
+      "applies_to": [
+        "2.3.3"
+      ],
+      "title": "pandas string array historical regression tests",
+      "url": "https://github.com/pandas-dev/pandas/blob/9c8bc3e55188c8aff37207a74f1dd144980b8874/pandas/tests/arrays/string_/test_string.py",
+      "download_url": "https://raw.githubusercontent.com/pandas-dev/pandas/9c8bc3e55188c8aff37207a74f1dd144980b8874/pandas/tests/arrays/string_/test_string.py",
+      "repository_path": "pandas/tests/arrays/string_/test_string.py",
+      "source_commit": "9c8bc3e55188c8aff37207a74f1dd144980b8874",
+      "release_tag": "v2.3.3",
+      "published_at": "2025-09-29T22:12:37Z",
+      "published_at_basis": "annotated release tag timestamp; conservative availability of this exact snapshot",
+      "fetched_at": "2026-10-13T16:39:28Z",
+      "content_hash": "sha256:54ea505790f83b6a1d0ddf63b89107f8378648805a8ebfffe429098ab8b42be1",
+      "snapshot_path": "snapshots/pandas-2.3.3-historical-string-test.py",
+      "byte_length": 30734,
+      "license": "BSD-3-Clause",
+      "license_path": "licenses/pandas-2.3.3-LICENSE.txt",
+      "license_url": "https://github.com/pandas-dev/pandas/blob/9c8bc3e55188c8aff37207a74f1dd144980b8874/LICENSE",
+      "retrieval_eligible": false,
+      "source_kind": "historical_regression_test"
+    }
+  ],
+  "source_unavailability": [
+    {
+      "url": "https://pandas.pydata.org/pandas-docs/version/3.0.0/whatsnew/v3.0.0.html",
+      "observed_at": "2026-10-13T16:39:28Z",
+      "status": "404 via web fetch",
+      "fallback": "Official release-tag RST source pinned to immutable commit; never replaced with current docs."
+    }
+  ],
+  "retrospective_policy": "Filter exact snapshots by published_at <= cutoff; exclude all historical regression-test sources from retrieval. No issue comments or later fixes enter the keyword index."
+}

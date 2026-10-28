@@ -1,0 +1,10 @@
+{
+  "ref": "refs/tags/v2.3.3",
+  "node_id": "MDM6UmVmODU4MTI3OnJlZnMvdGFncy92Mi4zLjM=",
+  "url": "https://api.github.com/repos/pandas-dev/pandas/git/refs/tags/v2.3.3",
+  "object": {
+    "sha": "1efe64945e7faf6255e83ea9df50abaec9a5bc69",
+    "type": "tag",
+    "url": "https://api.github.com/repos/pandas-dev/pandas/git/tags/1efe64945e7faf6255e83ea9df50abaec9a5bc69"
+  }
+}

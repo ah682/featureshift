@@ -1,0 +1,9 @@
+{
+  "name": "featureshift-local-launcher",
+  "private": true,
+  "description": "Optional development-server launcher; the application and CLI are Python.",
+  "scripts": {
+    "dev": "make demo",
+    "test": "make test"
+  }
+}

@@ -1,0 +1,35 @@
+[project]
+name = "featureshift"
+version = "0.1.0"
+description = "Evidence-grounded local pandas dependency upgrade preflight"
+requires-python = ">=3.12,<3.13"
+dependencies = ["fastapi==0.135.1", "uvicorn==0.41.0"]
+
+[project.scripts]
+featureshift = "featureshift.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+markers = ["integration: executes the pinned pandas worker environments"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+exclude = [".featureshift", ".venv"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.12"
+files = ["featureshift"]
+exclude = ["featureshift/worker.py"]
+check_untyped_defs = true
+no_implicit_optional = true
+
+[[tool.mypy.overrides]]
+module = ["pandas", "numpy"]
+ignore_missing_imports = true
+

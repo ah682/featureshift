@@ -1,0 +1,7 @@
+{
+  "data": {
+    "segment": ["starter", "growth", "starter", "enterprise"],
+    "spend": [25.0, 180.5, 42.0, 950.0],
+    "visits": [2, 8, 3, 21]
+  }
+}

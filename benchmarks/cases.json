@@ -1,0 +1,591 @@
+[
+  {
+    "id": "dtype-mask",
+    "title": "String feature lost by dtype mask",
+    "description": "String feature lost by dtype mask",
+    "category": "material change",
+    "source": "benchmarks/transforms/dtype-mask.py",
+    "fixture": "benchmarks/fixtures/text.json",
+    "expected": "material_change",
+    "family": "string-selector",
+    "split": "evaluation",
+    "contract": {
+      "expected_columns": [
+        "label"
+      ]
+    },
+    "provenance": {
+      "kind": "constructed",
+      "license": "MIT",
+      "created_at": "2026-10-13",
+      "author": "FeatureShift project",
+      "notes": "Sanitized constructed migration case; not a customer workload."
+    }
+  },
+  {
+    "id": "dtype-inference",
+    "title": "Inferred text dtype changes",
+    "description": "Inferred text dtype changes",
+    "category": "material change",
+    "source": "benchmarks/transforms/dtype-inference.py",
+    "fixture": "benchmarks/fixtures/text.json",
+    "expected": "material_change",
+    "family": "string-inference",
+    "split": "evaluation",
+    "contract": {},
+    "provenance": {
+      "kind": "constructed",
+      "license": "MIT",
+      "created_at": "2026-10-13",
+      "author": "FeatureShift project",
+      "notes": "Sanitized constructed migration case; not a customer workload."
+    }
+  },
+  {
+    "id": "null-sentinel",
+    "title": "Exact null representation changes",
+    "description": "Exact null representation changes",
+    "category": "material change",
+    "source": "benchmarks/transforms/null-sentinel.py",
+    "fixture": "benchmarks/fixtures/text.json",
+    "expected": "material_change",
+    "family": "null-representation",
+    "split": "evaluation",
+    "contract": {
+      "compare_dtypes": false
+    },
+    "provenance": {
+      "kind": "constructed",
+      "license": "MIT",
+      "created_at": "2026-10-13",
+      "author": "FeatureShift project",
+      "notes": "Sanitized constructed migration case; not a customer workload."
+    }
+  },
+  {
+    "id": "null-equivalent",
+    "title": "Contract treats missing sentinels equally",
+    "description": "Contract treats missing sentinels equally",
+    "category": "equivalent",
+    "source": "benchmarks/transforms/null-equivalent.py",
+    "fixture": "benchmarks/fixtures/text.json",
+    "expected": "equivalent",
+    "family": "null-representation",
+    "split": "evaluation",
+    "contract": {
+      "compare_dtypes": false,
+      "nulls": "equivalent"
+    },
+    "provenance": {
+      "kind": "constructed",
+      "license": "MIT",
+      "created_at": "2026-10-13",
+      "author": "FeatureShift project",
+      "notes": "Sanitized constructed migration case; not a customer workload."
+    }
+  },
+  {
+    "id": "astype-null",
+    "title": "Numeric-to-string conversion preserves null",
+    "description": "Numeric-to-string conversion preserves null",
+    "category": "material change",
+    "source": "benchmarks/transforms/astype-null.py",
+    "fixture": "benchmarks/fixtures/numbers.json",
+    "expected": "material_change",
+    "family": "string-conversion",
+    "split": "evaluation",
+    "contract": {
+      "non_null": [
+        "value"
+      ]
+    },
+    "provenance": {
+      "kind": "constructed",
+      "license": "MIT",
+      "created_at": "2026-10-13",
+      "author": "FeatureShift project",
+      "notes": "Sanitized constructed migration case; not a customer workload."
+    }
+  },
+  {
+    "id": "copy-on-write",
+    "title": "Chained inplace fill no longer changes parent",
+    "description": "Chained inplace fill no longer changes parent",
+    "category": "material change",
+    "source": "benchmarks/transforms/copy-on-write.py",
+    "fixture": "benchmarks/fixtures/numbers.json",
+    "expected": "material_change",
+    "family": "copy-on-write",
+    "split": "evaluation",
+    "contract": {
+      "non_null": [
+        "value"
+      ]
+    },
+    "provenance": {
+      "kind": "constructed",
+      "license": "MIT",
+      "created_at": "2026-10-13",
+      "author": "FeatureShift project",
+      "notes": "Sanitized constructed migration case; not a customer workload."
+    }
+  },
+  {
+    "id": "groupby-default",
+    "title": "Unused category disappears from aggregation",
+    "description": "Unused category disappears from aggregation",
+    "category": "material change",
+    "source": "benchmarks/transforms/groupby-default.py",
+    "fixture": "benchmarks/fixtures/groups.json",
+    "expected": "material_change",
+    "family": "categorical-observed",
+    "split": "evaluation",
+    "contract": {},
+    "provenance": {
+      "kind": "constructed",
+      "license": "MIT",
+      "created_at": "2026-10-13",
+      "author": "FeatureShift project",
+      "notes": "Sanitized constructed migration case; not a customer workload."
+    }
+  },
+  {
+    "id": "groupby-explicit",
+    "title": "Explicit observed grouping stays equivalent",
+    "description": "Explicit observed grouping stays equivalent",
+    "category": "equivalent",
+    "source": "benchmarks/transforms/groupby-explicit.py",
+    "fixture": "benchmarks/fixtures/groups.json",
+    "expected": "equivalent",
+    "family": "categorical-observed",
+    "split": "evaluation",
+    "contract": {},
+    "provenance": {
+      "kind": "constructed",
+      "license": "MIT",
+      "created_at": "2026-10-13",
+      "author": "FeatureShift project",
+      "notes": "Sanitized constructed migration case; not a customer workload."
+    }
+  },
+  {
+    "id": "category-codes",
+    "title": "Declared category mapping stays equivalent",
+    "description": "Declared category mapping stays equivalent",
+    "category": "equivalent",
+    "source": "benchmarks/transforms/category-codes.py",
+    "fixture": "benchmarks/fixtures/groups.json",
+    "expected": "equivalent",
+    "family": "category-mapping",
+    "split": "evaluation",
+    "contract": {},
+    "provenance": {
+      "kind": "constructed",
+      "license": "MIT",
+      "created_at": "2026-10-13",
+      "author": "FeatureShift project",
+      "notes": "Sanitized constructed migration case; not a customer workload."
+    }
+  },
+  {
+    "id": "numeric-scale",
+    "title": "Numeric scaling stays equivalent",
+    "description": "Numeric scaling stays equivalent",
+    "category": "equivalent",
+    "source": "benchmarks/transforms/numeric-scale.py",
+    "fixture": "benchmarks/fixtures/integer.json",
+    "expected": "equivalent",
+    "family": "numeric-scale",
+    "split": "evaluation",
+    "contract": {},
+    "provenance": {
+      "kind": "constructed",
+      "license": "MIT",
+      "created_at": "2026-10-13",
+      "author": "FeatureShift project",
+      "notes": "Sanitized constructed migration case; not a customer workload."
+    }
+  },
+  {
+    "id": "numeric-aggregate",
+    "title": "Numeric aggregation stays equivalent",
+    "description": "Numeric aggregation stays equivalent",
+    "category": "equivalent",
+    "source": "benchmarks/transforms/numeric-aggregate.py",
+    "fixture": "benchmarks/fixtures/integer.json",
+    "expected": "equivalent",
+    "family": "numeric-aggregate",
+    "split": "evaluation",
+    "contract": {},
+    "provenance": {
+      "kind": "constructed",
+      "license": "MIT",
+      "created_at": "2026-10-13",
+      "author": "FeatureShift project",
+      "notes": "Sanitized constructed migration case; not a customer workload."
+    }
+  },
+  {
+    "id": "datetime-resolution",
+    "title": "Parsed datetime resolution changes",
+    "description": "Parsed datetime resolution changes",
+    "category": "material change",
+    "source": "benchmarks/transforms/datetime-resolution.py",
+    "fixture": "benchmarks/fixtures/dates.json",
+    "expected": "material_change",
+    "family": "datetime-resolution",
+    "split": "evaluation",
+    "contract": {},
+    "provenance": {
+      "kind": "constructed",
+      "license": "MIT",
+      "created_at": "2026-10-13",
+      "author": "FeatureShift project",
+      "notes": "Sanitized constructed migration case; not a customer workload."
+    }
+  },
+  {
+    "id": "nullable-int",
+    "title": "Explicit nullable integer remains equivalent",
+    "description": "Explicit nullable integer remains equivalent",
+    "category": "equivalent",
+    "source": "benchmarks/transforms/nullable-int.py",
+    "fixture": "benchmarks/fixtures/numbers.json",
+    "expected": "equivalent",
+    "family": "nullable-integer",
+    "split": "evaluation",
+    "contract": {},
+    "provenance": {
+      "kind": "constructed",
+      "license": "MIT",
+      "created_at": "2026-10-13",
+      "author": "FeatureShift project",
+      "notes": "Sanitized constructed migration case; not a customer workload."
+    }
+  },
+  {
+    "id": "historical-none",
+    "title": "Historical string cast with none",
+    "description": "Historical string cast with none",
+    "category": "material change",
+    "source": "benchmarks/transforms/historical-none.py",
+    "fixture": "benchmarks/fixtures/text.json",
+    "expected": "material_change",
+    "family": "historical-36904",
+    "split": "evaluation",
+    "contract": {},
+    "provenance": {
+      "kind": "adapted_historical_regression",
+      "license": "BSD-3-Clause",
+      "created_at": "2026-10-13",
+      "source_url": "https://github.com/pandas-dev/pandas/blob/v2.3.3/pandas/tests/series/methods/test_astype.py",
+      "issue_url": "https://github.com/pandas-dev/pandas/issues/36904",
+      "original_issue_created_at": "2020-10-06T00:39:53Z",
+      "notes": "Present-day replay of licensed regression input; not a replay of the original historical environments. Regression test sources are excluded from retrieval."
+    }
+  },
+  {
+    "id": "historical-nan",
+    "title": "Historical string cast with nan",
+    "description": "Historical string cast with nan",
+    "category": "material change",
+    "source": "benchmarks/transforms/historical-nan.py",
+    "fixture": "benchmarks/fixtures/text.json",
+    "expected": "material_change",
+    "family": "historical-36904",
+    "split": "evaluation",
+    "contract": {},
+    "provenance": {
+      "kind": "adapted_historical_regression",
+      "license": "BSD-3-Clause",
+      "created_at": "2026-10-13",
+      "source_url": "https://github.com/pandas-dev/pandas/blob/v2.3.3/pandas/tests/series/methods/test_astype.py",
+      "issue_url": "https://github.com/pandas-dev/pandas/issues/36904",
+      "original_issue_created_at": "2020-10-06T00:39:53Z",
+      "notes": "Present-day replay of licensed regression input; not a replay of the original historical environments. Regression test sources are excluded from retrieval."
+    }
+  },
+  {
+    "id": "historical-na",
+    "title": "Historical string cast with na",
+    "description": "Historical string cast with na",
+    "category": "material change",
+    "source": "benchmarks/transforms/historical-na.py",
+    "fixture": "benchmarks/fixtures/text.json",
+    "expected": "material_change",
+    "family": "historical-36904",
+    "split": "evaluation",
+    "contract": {},
+    "provenance": {
+      "kind": "adapted_historical_regression",
+      "license": "BSD-3-Clause",
+      "created_at": "2026-10-13",
+      "source_url": "https://github.com/pandas-dev/pandas/blob/v2.3.3/pandas/tests/series/methods/test_astype.py",
+      "issue_url": "https://github.com/pandas-dev/pandas/issues/36904",
+      "original_issue_created_at": "2020-10-06T00:39:53Z",
+      "notes": "Present-day replay of licensed regression input; not a replay of the original historical environments. Regression test sources are excluded from retrieval."
+    }
+  },
+  {
+    "id": "historical-float32",
+    "title": "Historical float32 string formatting",
+    "description": "Historical float32 string formatting",
+    "category": "equivalent",
+    "source": "benchmarks/transforms/historical-float32.py",
+    "fixture": "benchmarks/fixtures/text.json",
+    "expected": "equivalent",
+    "family": "historical-36451",
+    "split": "evaluation",
+    "contract": {},
+    "provenance": {
+      "kind": "adapted_historical_regression",
+      "license": "BSD-3-Clause",
+      "created_at": "2026-10-13",
+      "source_url": "https://github.com/pandas-dev/pandas/blob/v2.3.3/pandas/tests/arrays/string_/test_string.py",
+      "issue_url": "https://github.com/pandas-dev/pandas/issues/36451",
+      "original_issue_created_at": "2020-09-18T14:55:41Z",
+      "notes": "Present-day replay of licensed regression input; not a replay of the original historical environments. Regression test sources are excluded from retrieval."
+    }
+  },
+  {
+    "id": "stochastic",
+    "title": "Unseeded random feature fails repeatability",
+    "description": "Unseeded random feature fails repeatability",
+    "category": "insufficient evidence",
+    "source": "benchmarks/transforms/stochastic.py",
+    "fixture": "benchmarks/fixtures/text.json",
+    "expected": "insufficient_evidence",
+    "family": "randomness",
+    "split": "evaluation",
+    "contract": {},
+    "provenance": {
+      "kind": "constructed",
+      "license": "MIT",
+      "created_at": "2026-10-13",
+      "author": "FeatureShift project",
+      "notes": "Sanitized constructed migration case; not a customer workload."
+    }
+  },
+  {
+    "id": "seeded-random",
+    "title": "Seeded random feature repeats",
+    "description": "Seeded random feature repeats",
+    "category": "equivalent",
+    "source": "benchmarks/transforms/seeded-random.py",
+    "fixture": "benchmarks/fixtures/text.json",
+    "expected": "equivalent",
+    "family": "randomness",
+    "split": "evaluation",
+    "contract": {},
+    "provenance": {
+      "kind": "constructed",
+      "license": "MIT",
+      "created_at": "2026-10-13",
+      "author": "FeatureShift project",
+      "notes": "Sanitized constructed migration case; not a customer workload."
+    }
+  },
+  {
+    "id": "wrong-version",
+    "title": "Wrong-version evidence is withheld",
+    "description": "Wrong-version evidence is withheld",
+    "category": "insufficient evidence",
+    "source": "benchmarks/transforms/wrong-version.py",
+    "fixture": "benchmarks/fixtures/text.json",
+    "expected": "insufficient_evidence",
+    "family": "evidence-controls",
+    "split": "evaluation",
+    "contract": {},
+    "provenance": {
+      "kind": "constructed",
+      "license": "MIT",
+      "created_at": "2026-10-13",
+      "author": "FeatureShift project",
+      "notes": "Sanitized constructed migration case; not a customer workload."
+    },
+    "evidence_versions": [
+      "1.5.3",
+      "2.0.0"
+    ]
+  },
+  {
+    "id": "install-failure",
+    "title": "Dependency setup failure stays an environment error",
+    "description": "Dependency setup failure stays an environment error",
+    "category": "environment error",
+    "source": "benchmarks/transforms/install-failure.py",
+    "fixture": "benchmarks/fixtures/integer.json",
+    "expected": "environment_error",
+    "family": "environment-controls",
+    "split": "evaluation",
+    "contract": {},
+    "provenance": {
+      "kind": "constructed",
+      "license": "MIT",
+      "created_at": "2026-10-13",
+      "author": "FeatureShift project",
+      "notes": "Sanitized constructed migration case; not a customer workload."
+    },
+    "fault": "environment"
+  },
+  {
+    "id": "probe-timeout",
+    "title": "Generated probe is terminated at its deadline",
+    "description": "Generated probe is terminated at its deadline",
+    "category": "probe error",
+    "source": "benchmarks/transforms/probe-timeout.py",
+    "fixture": "benchmarks/fixtures/integer.json",
+    "expected": "probe_error",
+    "family": "worker-controls",
+    "split": "evaluation",
+    "contract": {},
+    "provenance": {
+      "kind": "constructed",
+      "license": "MIT",
+      "created_at": "2026-10-13",
+      "author": "FeatureShift project",
+      "notes": "Sanitized constructed migration case; not a customer workload."
+    },
+    "fault": "probe_timeout"
+  },
+  {
+    "id": "map-preserve",
+    "title": "Portable string conversion preserves missing values",
+    "description": "Portable string conversion preserves missing values",
+    "category": "equivalent",
+    "source": "benchmarks/transforms/map-preserve.py",
+    "fixture": "benchmarks/fixtures/numbers.json",
+    "expected": "equivalent",
+    "family": "portable-conversion",
+    "split": "evaluation",
+    "contract": {
+      "nulls": "equivalent"
+    },
+    "provenance": {
+      "kind": "constructed",
+      "license": "MIT",
+      "created_at": "2026-10-13",
+      "author": "FeatureShift project",
+      "notes": "Sanitized constructed migration case; not a customer workload."
+    }
+  },
+  {
+    "id": "intentional-dtype",
+    "title": "Declared intentional dtype transition",
+    "description": "Declared intentional dtype transition",
+    "category": "intentional change",
+    "source": "benchmarks/transforms/intentional-dtype.py",
+    "fixture": "benchmarks/fixtures/text.json",
+    "expected": "intentional_change",
+    "family": "string-inference",
+    "split": "evaluation",
+    "contract": {
+      "nulls": "equivalent",
+      "intentional": [
+        "dtype:label"
+      ],
+      "rationale": "Adopt pandas string dtype intentionally; compare missing values by missingness."
+    },
+    "provenance": {
+      "kind": "constructed",
+      "license": "MIT",
+      "created_at": "2026-10-13",
+      "author": "FeatureShift project",
+      "notes": "Sanitized constructed migration case; not a customer workload."
+    }
+  },
+  {
+    "id": "strong-existing-test",
+    "title": "Existing test catches the lost feature",
+    "description": "Existing test catches the lost feature",
+    "category": "material change",
+    "source": "benchmarks/transforms/strong-existing-test.py",
+    "fixture": "benchmarks/fixtures/text.json",
+    "expected": "material_change",
+    "family": "string-selector",
+    "split": "evaluation",
+    "contract": {
+      "expected_columns": [
+        "label"
+      ]
+    },
+    "provenance": {
+      "kind": "constructed",
+      "license": "MIT",
+      "created_at": "2026-10-13",
+      "author": "FeatureShift project",
+      "notes": "Sanitized constructed migration case; not a customer workload."
+    }
+  },
+  {
+    "id": "select-dtypes-compat",
+    "title": "Object select_dtypes retains strings in 3.0",
+    "description": "Object select_dtypes retains strings in 3.0",
+    "category": "equivalent",
+    "source": "benchmarks/transforms/select-dtypes-compat.py",
+    "fixture": "benchmarks/fixtures/text.json",
+    "expected": "equivalent",
+    "family": "select-dtypes-compat",
+    "split": "evaluation",
+    "contract": {
+      "compare_dtypes": false,
+      "nulls": "equivalent"
+    },
+    "provenance": {
+      "kind": "constructed",
+      "license": "MIT",
+      "created_at": "2026-10-13",
+      "author": "FeatureShift project",
+      "notes": "Sanitized constructed migration case; not a customer workload."
+    }
+  },
+  {
+    "id": "retrospective-cutoff",
+    "title": "Later migration documents cannot diagnose a 2020 incident",
+    "description": "Later migration documents cannot diagnose a 2020 incident",
+    "category": "insufficient evidence",
+    "source": "benchmarks/transforms/retrospective-cutoff.py",
+    "fixture": "benchmarks/fixtures/text.json",
+    "expected": "insufficient_evidence",
+    "family": "temporal-evidence",
+    "split": "evaluation",
+    "contract": {},
+    "provenance": {
+      "kind": "adapted_historical_regression",
+      "license": "BSD-3-Clause",
+      "created_at": "2026-10-13",
+      "source_url": "https://github.com/pandas-dev/pandas/blob/v2.3.3/pandas/tests/series/methods/test_astype.py",
+      "issue_url": "https://github.com/pandas-dev/pandas/issues/36904",
+      "original_issue_created_at": "2020-10-06T00:39:53Z",
+      "notes": "Present-day replay of licensed regression input; not a replay of the original historical environments. Regression test sources are excluded from retrieval."
+    },
+    "cutoff": "2020-10-06T00:39:53Z"
+  },
+  {
+    "id": "probe-only-null",
+    "title": "Uncovered missingness feature changes only under the probe",
+    "description": "Constructed documented migration case: the no-null fixture and existing test pass; a generated missing value changes the derived indicator.",
+    "category": "material change",
+    "source": "benchmarks/transforms/probe-only-null.py",
+    "fixture": "benchmarks/fixtures/integer.json",
+    "entrypoint": "transform",
+    "expected": "material_change",
+    "family": "string-conversion",
+    "split": "evaluation",
+    "contract": {
+      "expected_columns": [
+        "missing_indicator"
+      ],
+      "expected_dtypes": {
+        "missing_indicator": "int64"
+      }
+    },
+    "provenance": {
+      "kind": "constructed",
+      "license": "MIT",
+      "created_at": "2026-10-13",
+      "author": "FeatureShift project",
+      "notes": "New constructed boundary case based on documented astype(str) null preservation. No customer data; designed to distinguish input/output comparison from generated boundary coverage."
+    }
+  }
+]
