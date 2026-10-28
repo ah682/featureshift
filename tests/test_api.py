@@ -57,7 +57,10 @@ def test_queued_numeric_run_completes_with_json_html_and_regression_downloads(tm
         start = client.post("/api/runs", json={"case_id": "numeric"}, headers={"Origin": "http://testserver"})
         assert start.status_code == 202 and start.json()["status"] == "queued"
         run_id = start.json()["id"]
-        deadline = time.monotonic() + 15
+        # This job performs 12 sequential worker runs, each with its own metadata
+        # check and execution deadline. Completion is the assertion here, not a
+        # 15-second performance target for shared CI hardware.
+        deadline = time.monotonic() + 300
         while True:
             response = client.get(f"/api/runs/{run_id}")
             assert response.status_code == 200
@@ -65,8 +68,8 @@ def test_queued_numeric_run_completes_with_json_html_and_regression_downloads(tm
             if report["status"] in ("completed", "partial", "failed"):
                 break
             assert report["status"] in ("queued", "running")
-            assert time.monotonic() < deadline, "Queued numeric run did not finish"
-            time.sleep(0.03)
+            assert time.monotonic() < deadline, f"Queued numeric run did not finish: {report['status']}"
+            time.sleep(0.1)
         assert report["status"] == "completed", report["findings"]
         assert report["summary"]["equivalent"] is True
         assert {"queued", "running", "completed"}.issubset({event["kind"] for event in report["events"]})

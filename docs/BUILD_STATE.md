@@ -57,3 +57,17 @@ were not recreated. Benchmark cases were curated alongside the implementation.
 Human review latency, stronger real repository tests, maintainer/customer value,
 other dependency pairs, live assistant comparisons and secure uploaded-code
 execution remain unperformed. They are not simulated or claimed complete.
+
+## Hosted runner follow-up
+
+The initial public CI run passed 84 tests but one queued API test hit its fixed
+15-second wait on shared hardware. That test creates 12 sequential isolated
+workers, each with metadata inspection and its own execution timeout. Its total
+wait was shorter than the supported job budget; it was an accidental latency
+assertion, not a product requirement. The test still polls actual terminal state
+and validates all outputs, with a five-minute overall guard and fewer repeated
+HTTP reads. Per-worker timeouts and the separate timeout acceptance test are
+unchanged. The CI job also has a 20-minute overall limit.
+
+Initial run: https://github.com/ah682/featureshift/actions/runs/40650169839
+The corrected hosted run must pass before publication verification is complete.
