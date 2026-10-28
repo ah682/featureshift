@@ -83,9 +83,11 @@ class Store:
 
     def recover_interrupted(self) -> int:
         count = 0
-        for summary in self.list():
-            if summary["status"] in ("queued", "running"):
-                report = self.get(summary["id"])
+        # The UI's recent-history limit must not leave older jobs running forever.
+        with self.lock, self.connect() as db:
+            reports = [json.loads(row[0]) for row in db.execute("SELECT report FROM runs")]
+        for report in reports:
+            if report["status"] in ("queued", "running"):
                 report.update(status="failed", error="The local service stopped before this run completed. Rerun the case.")
                 self.save(report, "interrupted")
                 count += 1

@@ -44,11 +44,15 @@ def main(argv: list[str] | None = None) -> int:
     demo = commands.add_parser("demo", help="Seed meaningful reports and serve the local UI")
     demo.add_argument("--seed-only", action="store_true")
     serve = commands.add_parser("serve", help="Serve existing local reports")
+    loopback_hosts = ("127.0.0.1", "localhost", "::1")
     for sub in (demo, serve):
-        sub.add_argument("--port", type=int, default=int(os.environ.get("FEATURESHIFT_PORT", "8765")))
-        sub.add_argument("--host", choices=["127.0.0.1", "localhost", "::1"], default=os.environ.get("FEATURESHIFT_HOST", "127.0.0.1"))
+        sub.add_argument("--port", type=int, default=os.environ.get("FEATURESHIFT_PORT", "8765"))
+        sub.add_argument("--host", choices=loopback_hosts, default=os.environ.get("FEATURESHIFT_HOST", "127.0.0.1"))
     commands.add_parser("reset", help="Remove generated reports/database; retain downloaded dependencies and evidence")
     args = parser.parse_args(argv)
+    # argparse checks explicit choices, but does not check environment defaults.
+    if args.command in ("serve", "demo") and args.host not in loopback_hosts:
+        parser.error("FEATURESHIFT_HOST must be 127.0.0.1, localhost or ::1")
     try:
         if args.command == "setup":
             result = setup_environments(ROOT, offline=args.offline)
