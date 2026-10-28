@@ -45,8 +45,16 @@ make evaluate
 
 For browser checks, start a seeded local service and isolated Chrome as described in the [browser QA notes](../scripts/browser-qa-notes.md), then run both commands from the table. CI uses `FEATURESHIFT_URL=http://127.0.0.1:18765` and `CHROME_DEBUG_URL=http://127.0.0.1:19227`; both scripts are part of the [verification workflow](../.github/workflows/ci.yml).
 
-Verification jobs now use pinned action commits, read-only repository permissions, time limits, and cancellation of superseded runs. CI includes browser checks and actionlint. [Dependency checks](../.github/workflows/dependencies.yml) run on pushes, pull requests and weekly schedules; [Dependabot](../.github/dependabot.yml) proposes action updates. The exact pandas worker locks remain part of the experiment, and are audited separately from application tooling. Hosted results are pending; workflow configuration alone is not a passing run.
+Verification jobs now use pinned action commits, read-only repository permissions, time limits, and cancellation of superseded runs. CI includes browser checks and actionlint. [Dependency checks](../.github/workflows/dependencies.yml) run on pushes, pull requests and weekly schedules; [Dependabot](../.github/dependabot.yml) proposes action updates. The exact pandas worker locks remain part of the experiment, and are audited separately from application tooling. Hosted verification and dependency checks passed for the revision recorded below.
 
-Verdict: The three reproduced runtime defects are fixed without changing the local architecture or comparison protocol. Independent integration review and hosted checks remain pending.
+Verdict: The three reproduced runtime defects are fixed without changing the local architecture or comparison protocol. Independent integration review and hosted checks passed for the recorded revision.
 
 Not checked: Arbitrary repository execution, a secure untrusted-code sandbox, live model providers, customer accuracy or handling time, and public multi-user operation. One existing Starlette/httpx test-client deprecation warning remains. MIT and upstream evidence notices are unchanged.
+
+## Hosted verification — 28 October 2026
+
+Reviewed implementation and workflow revision: `a0ad728a2b88af7d7d369441c0513d5bb5e1c7f2`.
+[Verification](https://github.com/ah682/featureshift/actions/runs/40667448073) and
+[dependency auditing](https://github.com/ah682/featureshift/actions/runs/40667448053) both passed.
+The run artifacts retain the generated test/browser evidence for 14 days.
+Subsequent documentation-only commits do not change this tested implementation.

@@ -28,3 +28,5 @@ The checks create fixture runs and record review decisions. They cover delayed r
 Preserve the fixed pandas 2.3.3 → 3.0.0 comparison and common dependency versions unless the task explicitly changes the experimental protocol. Preserve source hashes, passage offsets, version filters, publication cutoffs, original observations and acceptance history. Do not turn missing execution or evidence into equivalence. Arbitrary uploads remain disabled, subprocess limits are not a secure sandbox, and suggested patches remain reviewable downloads rather than automatic edits.
 
 Stop the server before resetting disposable state. Do not reset retained investigations or introduce live services merely to reproduce a local defect. Original code is [MIT licensed](LICENSE); preserve the [upstream evidence notices](evidence/licenses/) and the permission boundaries in [DATA.md](docs/DATA.md).
+
+Install ShellCheck alongside actionlint when checking workflow edits, so embedded shell commands are validated as they are on the GitHub runner.
